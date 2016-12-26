@@ -1,0 +1,30 @@
+<html>
+<head><title>Cysboard</title></head>
+<body>
+	<style>
+		html  { background:transparent; } // the window is transparent
+	   body  
+	   { 
+	     color: white;
+	     margin:*; // flex margins will move the body in the mddle of the root
+	     font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
+	  }
+	        
+	</style>
+	<div #cpuinfo>
+		<p #cpu_name></p>
+		<p #mem_free>Memory Freee Here</p>
+		<p #mem_used></p>
+		<p #os_name></p>
+	</div>
+	<script type="text/tiscript">
+		self.ready = function()
+		{
+			$(#cpu_name).text = view.cpu_name();
+//			$(#mem_free).text = view.mem_free();
+//			$(#mem_used).text = view.mem_used();
+			$(#os_name).text =  view.os_name();
+		}
+	</script>
+</body>
+</html>
