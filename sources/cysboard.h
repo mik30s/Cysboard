@@ -41,18 +41,27 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
     #include <unistd.h>
 #endif
 
-#define INT_TO_DOM_TEXT(source, destination) \
-            if(destination.is_valid()) { \
-                destination.set_text((const WCHAR*)aux::utf2w(std::to_string(source))); \
-            }
+template<class T>
+inline void NUM_TO_DOM_TEXT(T source, sciter::dom::element destination){
+    std::string val = std::to_string(source);
+    val.erase(val.find_last_not_of("0") + 1);
+    if(destination.is_valid()) {
+        destination.set_text((const WCHAR*)aux::utf2w(val));
+    }
+}
 
-#define STR_TO_DOM_TEXT(source, destination)\
-            if(destination.is_valid()) { \
-                destination.set_text((const WCHAR*)aux::utf2w(source)); \
-            }
+inline void STR_TO_DOM_TEXT(std::string source, sciter::dom::element destination) {
+    if(destination.is_valid()) { \
+        destination.set_text((const WCHAR*)aux::utf2w(source)); \
+    }
+}
 
-#define DOM_TEXT_TO_INT(source, destination)\
-            destination = aux::wtoi(source.c_str()); \
+#define DOM_TEXT_TO_NUM(source, destination) \
+            destination = aux::wtoi(source.c_str());
+
+#define DOM_TEXT_TO_STR(source, destination)\
+            destination = aux::w2utf(source.c_str()); \
+
 
 
 class CysBoard : public sciter::window
@@ -82,6 +91,10 @@ private:
     sciter::dom::element m_osName;
     sciter::dom::element m_osDistroName;
     sciter::dom::element m_osUptime;
+    // other
+    sciter::dom::element m_exec;
+
+    std::vector<std::string> procExecList;
 
     double m_updateInterval;
 
@@ -158,6 +171,14 @@ bool CysBoard::configure() {
     m_osDistroName = m_root.find_first("#os_distro_name");
     m_osUptime = m_root.find_first("#os_uptime");
     // disk
+    // networking
+    // other
+//    struct ProcExecCounter: callback{
+
+//    };
+
+//    m_exec = m_root.find_all(, "id=^proc_exec");
+
 
     // meta tags for other config
     dom::element windowPositionX = m_root.find_first("meta[name=position_x]");
@@ -166,8 +187,8 @@ bool CysBoard::configure() {
     // set window position
     if(windowPositionX.is_valid() && windowPositionY.is_valid()) {
         uint posX, posY;
-        DOM_TEXT_TO_INT(windowPositionX.get_attribute("content"), posX);
-        DOM_TEXT_TO_INT(windowPositionY.get_attribute("content"), posY);
+        DOM_TEXT_TO_NUM(windowPositionX.get_attribute("content"), posX);
+        DOM_TEXT_TO_NUM(windowPositionY.get_attribute("content"), posY);
         // move window to position
         // Note: for absolute positioning set margin of <body> to 0 in stylesheet
 //        m_logger->info("X {0:d}", posX);
@@ -183,8 +204,8 @@ bool CysBoard::configure() {
 
     if(windowWidth.is_valid() && windowHeight.is_valid()){
         uint width, height;
-        DOM_TEXT_TO_INT(windowWidth.get_attribute("content"), width);
-        DOM_TEXT_TO_INT(windowHeight.get_attribute("content"), height);
+        DOM_TEXT_TO_NUM(windowWidth.get_attribute("content"), width);
+        DOM_TEXT_TO_NUM(windowHeight.get_attribute("content"), height);
 
 //        m_logger->info("Width {0:d}", width);
 //        m_logger->info("Height {0:d}", height);
@@ -196,13 +217,13 @@ bool CysBoard::configure() {
 
     // set update interval
     dom::element updateInterval = m_root.find_first("meta[name=time]");
-    DOM_TEXT_TO_INT(updateInterval.get_attribute("content"), m_updateInterval);
+    DOM_TEXT_TO_NUM(updateInterval.get_attribute("content"), m_updateInterval);
     if(m_updateInterval < 0.1) {
         m_updateInterval = 0.1;
     }
 
     // info sources that have options
-
+//    DOM_TEXT_TO_STR(m_exec.get_attribute("cmd"), )
 
     return retVal;
 }
@@ -225,22 +246,24 @@ void CysBoard::update() {
     // convert values and update
     // cpu values
     STR_TO_DOM_TEXT(m_cpuInfo->m_name, m_cpuName);
-    INT_TO_DOM_TEXT(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
     STR_TO_DOM_TEXT(m_cpuInfo->m_architecture, m_cpuArchitecture);
     STR_TO_DOM_TEXT(m_cpuInfo->m_vendor, m_cpuVendor);
-    INT_TO_DOM_TEXT(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
+    NUM_TO_DOM_TEXT(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
+    NUM_TO_DOM_TEXT(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
     // os values
     STR_TO_DOM_TEXT(m_osInfo->m_name, m_osName);
     STR_TO_DOM_TEXT(m_osInfo->m_distroName, m_osDistroName);
     STR_TO_DOM_TEXT(m_osInfo->m_uptime, m_osUptime);
     // memory values
-    INT_TO_DOM_TEXT(m_ramInfo->m_free, m_memFree);
-    INT_TO_DOM_TEXT(m_ramInfo->m_used, m_memUsed);
+    NUM_TO_DOM_TEXT(m_ramInfo->m_free, m_memFree);
+    NUM_TO_DOM_TEXT(m_ramInfo->m_used, m_memUsed);
     #ifdef __linux
-        INT_TO_DOM_TEXT(m_ramInfo->m_totalSwap, m_memTotalSwap);
+        NUM_TO_DOM_TEXT(m_ramInfo->m_totalSwap, m_memTotalSwap);
     #endif
     // disk values
     // network values
+    // execute command and output result on each update
+
 
     usleep(m_updateInterval * 1000000);
 }
