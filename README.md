@@ -8,6 +8,18 @@ css for themes
 2. Add your html code with any of the listed ids below in html tags for device info.
 3. Run cysboard.
 
+
+##Compiling##  
+You must have gcc >= 5.6 in order to compile
+
+1. Compile default theme and other resources
+	1. cd sources/resources
+	2. ./compile.sh
+2. Compile Cysboard
+	1. cd build
+	2. make
+
+
 ##Examples##
 ![cysboard_default](https://cloud.githubusercontent.com/assets/3809183/21536018/bdfcee36-cd42-11e6-95de-2e8491c49ce5.png)
 
@@ -67,16 +79,6 @@ mem_total      | The total amount of physical memory available
 os_name        | The name of the OS eg. linux or windows        
 os_distro_name | The distribution name (*Linux only*)       
 os_uptime      | The total amount of time since last boot 
-
-##Compiling## 
-You must have gcc >= 4.9 in order to compile
-
-1. Compile default theme and other resources
-	1. cd sources/resources
-	2. ./compile.sh
-2. Compile Cysboard
-	1. cd build
-	2. make
 
 
 
