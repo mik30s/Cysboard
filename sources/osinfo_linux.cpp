@@ -1,3 +1,7 @@
+/**
+  *
+  *
+  */
 #include "osinfo.h"
 
 
@@ -11,9 +15,10 @@ OSInformation::alternateFieldValues = {
 
 /**
  * @brief OSInformation::OSInformation
+ *
  */
 OSInformation::OSInformation(){
-    m_logger = spdlog::get("cysboardLogger");
+    m_logger = spdlog::get("logger");
 
     uname(&m_nameInfo);
 
@@ -22,9 +27,10 @@ OSInformation::OSInformation(){
     m_fpOsRelease = fopen("/etc/os-release", "r");
     m_fpUptime = fopen("/proc/uptime","r");
 
-    if(m_fpLsbRelease == nullptr && m_fpOsRelease == nullptr){
-        throw std::runtime_error(std::string(__FUNCTION__) + "Failed to open /etc/lsb-release" \
-                                              " and /etc/os-release");
+    if(m_fpLsbRelease == nullptr && m_fpOsRelease == nullptr) {
+        throw std::runtime_error(std::string(__FUNCTION__) +
+                                 "Failed to open /etc/lsb-release" \
+                                 " and /etc/os-release");
     }
 
     m_fpReleaseCurrent = m_fpLsbRelease;
@@ -54,7 +60,7 @@ std::string OSInformation::getName(){
  * @brief OSInformation::getVersion
  * @return
  */
-std::string OSInformation::getVersion(){
+std::string OSInformation::getVersion() {
     return std::string(m_nameInfo.release);
 }
 
@@ -63,7 +69,7 @@ std::string OSInformation::getVersion(){
  * @brief OSInformation::getDistroName
  * @return
  */
-std::string OSInformation::getDistroName(){
+std::string OSInformation::getDistroName() {
     const char* fieldName = getAlternativeFieldName(LSB_RELEASE_DISTRO_NAME);
     return readReleaseInfoField(m_fpReleaseCurrent, fieldName);
 }
@@ -90,20 +96,21 @@ std::string OSInformation::getUptime(UPTIME_FORMAT format = UPTIME_FORMAT::FULL)
     unsigned long long seconds= 0, mins = 0, hrs = 0, days = 0;
     char line[20];
 
-    if(m_fpUptime != nullptr){
+    if(m_fpUptime != nullptr) {
         fseek(m_fpUptime, 0, SEEK_SET);
-        if(fgets(line, sizeof(line), m_fpUptime) != nullptr){
+        if(fgets(line, sizeof(line), m_fpUptime) != nullptr) {
+            // clear previous stream first
+            sstream.str("");
             sstream << line;
             sstream >> seconds;
 
-            // conversions
+            // time conversions
             mins = std::floor(seconds / 60);
-            hrs = std::floor(mins / 60);
-            days = std::floor( hrs / 24);
+            hrs  = std::floor(mins / 60);
+            days = std::floor(hrs / 24);
 
-            // clear stream first
             sstream.str("");
-            switch(format){
+            switch(format) {
                 case UPTIME_FORMAT::SECONDS:
                     sstream << seconds;
                     break;
@@ -123,11 +130,9 @@ std::string OSInformation::getUptime(UPTIME_FORMAT format = UPTIME_FORMAT::FULL)
                             << ":" << (long long) seconds % 60;
                     break;
             }
-
             sstream >> retValue;
         }
     }
-
     return retValue;
 }
 
@@ -140,10 +145,10 @@ std::string OSInformation::readReleaseInfoField(FILE* fp, const char* fieldName)
     char line[30], *ptrMatch;
     std::string value, field;
 
-    while(fgets(line, sizeof(line), fp) != nullptr){
-        if((ptrMatch = strstr(line, fieldName)) != nullptr){
+    while(fgets(line, sizeof(line), fp) != nullptr) {
+        if((ptrMatch = strstr(line, fieldName)) != nullptr) {
             ptrMatch = strstr(line, "=");
-            if(ptrMatch != nullptr){
+            if(ptrMatch != nullptr) {
                 ptrMatch += 1;
                 value = std::string(ptrMatch);
                 break;
@@ -152,7 +157,7 @@ std::string OSInformation::readReleaseInfoField(FILE* fp, const char* fieldName)
     }
 
     // remove quotes if any
-    if(value.front() == '"'){
+    if(value.front() == '"') {
         value.erase(0,1); // remove first
         value.erase(value.size() - 1); // remove last
     }

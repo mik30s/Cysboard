@@ -68,7 +68,10 @@ namespace sciter {
     if(_hwnd) gtk_window_iconify (gwindow(_hwnd));
   }
   void window::expand( bool maximize) {
-    if(_hwnd) gtk_window_present (gwindow(_hwnd));
+    if(_hwnd) {
+        gtk_window_present (gwindow(_hwnd));
+        gtk_window_set_keep_below(gwindow(_hwnd), true);
+    }
   }
 
   void window::dismiss() {

@@ -11,7 +11,7 @@ DiskInformation::DiskInformation()
     m_dirDisks = opendir(SYSFS_DIRECTORY);
 
     if(m_dirDisks == nullptr) {
-        throw std::runtime_error(std::string(__FUNCTION__) + "Failed to open /sys/block");
+        throw std::runtime_error(std::string(__FUNCTION__) + " failed to open /sys/block");
     }
 
     std::regex regexp("sd([A-Za-z]|[A-Za-z][0-9])+");

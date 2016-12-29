@@ -1,0 +1,1 @@
+when-changed default.htm -c ../packfolder.bin ../resources ../default_theme.cpp

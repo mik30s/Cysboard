@@ -1,5 +1,5 @@
 /**
- *  Provides functions for gathering/retrieving Cpu information on a linux system.
+ *  Provides functions for retrieving Cpu information on a linux system.
  *  The constructor opens the /proc/stats and /proc/cpuinfo files for
  *  reading cpu information. If that fails an exception is thrown. Otherwise
  *  we fill up the cpu field buffers then exit.
@@ -21,7 +21,7 @@ bool readCpuStatsLine(FILE* fp, int lineNumber ,uint64_t* fields);
  * @brief CpuInformation constructor
  *
  * Opens the /proc/stats and /proc/cpuinfo files for
- * reading cpu information. If that fails an exception is thrown. Otherwise
+ * cpu information. If that fails an exception is thrown. Otherwise
  * we fill up the cpu field buffers then exit.
  */
 CpuInformation::CpuInformation()
@@ -32,13 +32,13 @@ CpuInformation::CpuInformation()
     m_fpInfo = fopen("/proc/cpuinfo", "r");
 
     if(m_fpInfo == nullptr)
-        throw std::runtime_error( std::string(__FUNCTION__ ) + "Failed to open /proc/cpuinfo");
+        throw std::runtime_error( std::string(__FUNCTION__) + "Failed to open /proc/cpuinfo");
 
     // Read in cpu timming data from /proc/stat
     m_fpStats = fopen("/proc/stat", "r");
 
     if(m_fpStats == nullptr)
-        throw std::runtime_error(std::string(__FUNCTION__ ) + "Failed to open /proc/stats");
+        throw std::runtime_error(std::string(__FUNCTION__) + "Failed to open /proc/stats");
 
     // capture the first tick values
     int i, cpus = 0;

@@ -1,30 +1,81 @@
 <html>
-<head><title>Cysboard</title></head>
+<head>
+    <title>Cysboard</title>
+    <meta name="position_x" content="1000">
+    <meta name="position_y" content="50">
+    <meta name="width"  content="350">
+    <meta name="height" content="350">
+    <meta name="time" content="1">
+</head>
 <body>
-	<style>
-		html  { background:transparent; } // the window is transparent
-	   body  
-	   { 
-	     color: white;
-	     margin:*; // flex margins will move the body in the mddle of the root
-	     font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
-	  }
-	        
-	</style>
-	<div #cpuinfo>
-		<p #cpu_name></p>
-		<p #mem_free>Memory Freee Here</p>
-		<p #mem_used></p>
-		<p #os_name></p>
-	</div>
-	<script type="text/tiscript">
-		self.ready = function()
-		{
-			$(#cpu_name).text = view.cpu_name();
-//			$(#mem_free).text = view.mem_free();
-//			$(#mem_used).text = view.mem_used();
-			$(#os_name).text =  view.os_name();
-		}
-	</script>
+    <style>
+       html { 
+           background: transparent; 
+       }
+
+       body  { 
+         color: white;
+         border-width: 3px;
+         border-color: rgba(10, 10, 22, 0.9);
+         border-style: solid;
+         border-radius: 5px;
+         padding: 5px;
+         margin:*;
+         font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
+         width: 200px;
+         height: auto;
+         background: rgba(10, 10, 15, 0.8);
+         box-shadow: 0px 0px 20px rgba(10,10, 10, 0.8);
+      }
+
+    body.shown{
+    
+    }
+
+      .section {
+        background: rgba(10, 10, 20, 0.8);
+        height: auto;
+        width: 100%;
+        position: relative;
+        padding: 3px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+      }
+
+      .section > p {
+        margin: 1px;
+        padding: 1px;
+      }
+
+    .section-header {
+        background: rgba(70, 226, 22, 0.9);
+        color: rgba(10, 10, 20, 0.8);;
+        font-weight: 900;
+        border-radius: 2px 2px 0px 0px;
+    }
+            
+    </style>
+   <!-- os info -->
+    <div .section #osinfo>
+        <div .section-header>OS</div>
+        <p>name: <span #os_name></span></p>
+        <p>distro: <span #os_distro_name></span></p>
+        <p>uptime: <span #os_uptime></span></p>
+    </div>
+    <!-- cpu info -->
+    <div .section #cpuinfo>
+        <div .section-header>CPU</div>
+        <p>model: <span #cpu_name></span></p>
+        <p>vendor: <span #cpu_vendor></span></p>
+        <p>arch: <span #cpu_arch></span></p>
+        <p>usage: <span #cpu_usage></span>%</p>
+    </div>
+    <!-- mem info -->
+    <div .section #meminfo>
+        <div .section-header>RAM</div>
+        <p>free: <span #mem_free></span></p>
+        <p>used: <span #mem_used></span></p>
+    </div>
 </body>
 </html>
+

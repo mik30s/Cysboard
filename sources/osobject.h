@@ -2,8 +2,9 @@
 #define OSOBJECT_H
 
 #include "osinfo.h"
+#include "iinfoobject.h"
 
-class OsObject
+class OsObject : public IInfoObject
 {
 
 private:
@@ -16,7 +17,7 @@ public:
     void initialize();
     void update();
 
-    std::string m_name;
+    std::string  m_name;
     std::string  m_vendor;
     std::string  m_version;
     std::string  m_distroName;

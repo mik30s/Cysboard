@@ -2,6 +2,7 @@
 #define CYSBOARD_OSINFO_H
 
 #include <iostream>
+#include <cstdio>
 #include <sys/utsname.h>
 #include <spdlog/spdlog.h>
 #include <sstream>
