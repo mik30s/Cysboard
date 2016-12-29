@@ -9,7 +9,7 @@ css for themes
 3. Run cysboard.
 
 ##Examples##
-![default](/sources/resources/cysboard_default.png "Optional Title")
+![cysboard_default](https://cloud.githubusercontent.com/assets/3809183/21536018/bdfcee36-cd42-11e6-95de-2e8491c49ce5.png)
 
 ####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.####
 
