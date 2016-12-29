@@ -9,7 +9,7 @@ css for themes
 3. Run cysboard.
 
 ##Examples##
-![picture alt](resources/cysboard_default.jpg "deafult theme")
+![picture alt](sources/resources/cysboard_default.jpg "deafult theme")
 
 ####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.####
 
