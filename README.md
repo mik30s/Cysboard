@@ -47,7 +47,7 @@ Use ids like the following
     	<img src="/home/rubiqz/.config/cysboard/crysis_logo.png" />
     </div>
 
-See resources/default.html fo more
+See resources/default.html for a working theme.
 
 ##IDs##
 A list of currently supported information from sources. Add any of
