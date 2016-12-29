@@ -53,20 +53,20 @@ See sources/resources/default.html for a working theme.
 A list of currently supported information from sources. Add any of
 them as an *id* attribute for a tag in your theme file.
 
-ID        | Info
---------- | -----------------
-cpu_name -  The CPU's name                                 
-cpu_usage - The total usage of the CPU in percentages      
-cpu_arch  - The CPU's architecture                         
-cpu_vendor - The CPU vendor eg. Intel, AMD                  
-cpu_num_cores - The number of physical cores                
-mem_free - The amount of free memory in KB                
-mem_used - The amount of used memory in KB                
-mem_swap_total - The amount of swap memory in KB                
-mem_total - The total amount of physical memory available  
-os_name - The name of the OS eg. linux or windows        
-os_distro_name - The distribution name (*Linux only*)       
-os_uptime - The total amount of time since last boot     
+ID             | Info
+-------------- | -----------------
+cpu_name       |  The CPU's name                                 
+cpu_usage      | The total usage of the CPU in percentages      
+cpu_arch       | The CPU's architecture                         
+cpu_vendor     | The CPU vendor eg. Intel, AMD                  
+cpu_num_cores  | The number of physical cores                
+mem_free       | The amount of free memory in KB                
+mem_used       | The amount of used memory in KB                
+mem_swap_total | The amount of swap memory in KB                
+mem_total      | The total amount of physical memory available  
+os_name        | The name of the OS eg. linux or windows        
+os_distro_name | The distribution name (*Linux only*)       
+os_uptime      | The total amount of time since last boot     
 
 
 #####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.#####
