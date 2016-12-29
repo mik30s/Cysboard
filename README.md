@@ -8,5 +8,8 @@ css for themes
 2. Add your html code with any of the listed tags for device info.
 3. Run cysboard.
 
+##Examples##
+Markup : ![picture alt](resources/cysboard_default.jpg)
+
 ####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.####
 
