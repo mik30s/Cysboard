@@ -53,6 +53,8 @@ See sources/resources/default.html for a working theme.
 A list of currently supported information from sources. Add any of
 them as an *id* attribute for a tag in your theme file.
 
+ID        | Info
+--------- | -----------------
 cpu_name -  The CPU's name                                 
 cpu_usage - The total usage of the CPU in percentages      
 cpu_arch  - The CPU's architecture                         
