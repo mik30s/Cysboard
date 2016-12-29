@@ -9,7 +9,7 @@ css for themes
 3. Run cysboard.
 
 
-##Compiling\##  
+##Compiling  
 You must have gcc >= 5.6 in order to compile
 
 1. Compile default theme and other resources
