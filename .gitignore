@@ -2,3 +2,8 @@ debug/
 release
 build/cysboard.pro.user
 build/cysboard.pro.use*
+build/Makefile
+build/cysboard
+*.o
+.qmake.stash
+

@@ -10,14 +10,15 @@ css for themes
 
 
 ##Compiling  
-You must have gcc >= 5.6 in order to compile
+You must have qmake and gcc >= 5.6 in order to compile
 
 1. Compile default theme and other resources
 	1. cd sources/resources
 	2. ./compile.sh once
 2. Compile Cysboard
 	1. cd build
-	2. make
+	2. qmake -o Makefile cysboard.pro
+	3. make
 
 
 ##Examples##
