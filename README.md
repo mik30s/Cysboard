@@ -11,44 +11,7 @@ css for themes
 ##Examples##
 ![cysboard_default](https://cloud.githubusercontent.com/assets/3809183/21536018/bdfcee36-cd42-11e6-95de-2e8491c49ce5.png)
 
-###main.html###
-
-<html>
-<head>
-    <title>Cysboard</title>
-    <meta name="position_x" content="0">
-    <meta name="position_y" content="0">
-    <meta name="width"  content="500">
-    <meta name="height" content="740">
-    <meta name="time" content="1">
-</head>
-<body>
-    <style>
-       html { 
-           background: transparent; 
-           margin: 0px;
-           padding: 0px;
-       }
-
-       body  { 
-       	 position: relative;
-         color: #a7b7b3;
-         border-width: 0px;
-         border-color: rgba(10, 10, 22, 0.9);
-         border-style: solid;
-         padding: 0px 5px 0px 2px;
-         margin: 0px;
-         font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
-         width: 340px;
-         height: 100%;
-         background: rgba(10, 10, 15, 0.2);
-         box-shadow: 0px 0px 20px rgba(10,10, 10, 0.8);
-      	}
-
-      	...
-            
-    </style>
-    <div id="header">
+Use ids like the following 
 
     </div>
     <div id="content">
@@ -83,10 +46,8 @@ css for themes
     <div id="footer">
     	<img src="/home/rubiqz/.config/cysboard/crysis_logo.png" />
     </div>
-</body>
-</html>
 
-
+See resources/default.html fo more
 
 ##IDs##
 A list of currently supported information from sources. Add any of
@@ -106,5 +67,5 @@ os_distro_name - The distribution name (*Linux only*)
 os_uptime - The total amount of time since last boot     
 
 
-####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.####
+#####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.#####
 
