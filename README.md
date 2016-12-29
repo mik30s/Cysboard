@@ -66,8 +66,20 @@ mem_swap_total | The amount of swap memory in KB
 mem_total      | The total amount of physical memory available  
 os_name        | The name of the OS eg. linux or windows        
 os_distro_name | The distribution name (*Linux only*)       
-os_uptime      | The total amount of time since last boot     
+os_uptime      | The total amount of time since last boot 
+
+##Compiling## 
+You must have gcc >= 4.9 in order to compile
+
+1. Compile default theme and other resources
+	1. cd sources/resources
+	2. ./compile.sh
+2. Compile Cysboard
+	1. cd build
+	2. make
+
 
 
 #####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.#####
+
 
