@@ -19,6 +19,10 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "cpuobject.h"
 
+// simple float rounding macro
+#define ROUND(value)\
+    std::floor(value * 10 + 0.5) / 10;\
+
 
 /**
  * @brief CpuObject::CpuObject
@@ -80,13 +84,13 @@ void CpuObject::update(){
     for(int core = 1; core < m_numberOfCores+1; core++){
         CpuCoreObject* ptrCore = dynamic_cast<CpuCoreObject*>(m_ptrCores[core-1]);
 
-        ptrCore->m_usePercentage = m_ptrCpuInfo->getCoreUsagePercentage(core);
-        ptrCore->m_currentSpeed = m_ptrCpuInfo->getCurrentSpeed(core);
+        ptrCore->m_usePercentage = std::ceil(m_ptrCpuInfo->getCoreUsagePercentage(core));
+        ptrCore->m_currentSpeed = std::ceil(m_ptrCpuInfo->getCurrentSpeed(core));
 
         // m_logger->info("{0:f}",ptr->m_currentSpeed);
     }
 
-    m_totalUsagePercent = m_ptrCpuInfo->getTotalUsagePercentage();
+    m_totalUsagePercent = ROUND(m_ptrCpuInfo->getTotalUsagePercentage());
 }
 
 
