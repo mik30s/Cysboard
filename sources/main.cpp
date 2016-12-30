@@ -16,7 +16,6 @@ You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
-
 #include <spdlog/spdlog.h>
 #include <thread>
 #include "cysboard.h"
@@ -55,7 +54,7 @@ int uimain(std::function<int()> run)
 
     // monitor directory for changes
     int inotifyfd = inotify_init();
-    int watchd = inotify_add_watch(inotifyfd, path.c_str(), IN_MODIFY);
+    inotify_add_watch(inotifyfd, path.c_str(), IN_MODIFY);
 
     // if cant load theme then load default theme instead
     bool isOpen = cysboard->load(aux::utf2w((path + "main.html").c_str()));
