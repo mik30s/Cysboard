@@ -81,6 +81,14 @@ os_name        | The name of the OS eg. linux or windows
 os_distro_name | The distribution name (*Linux only*)       
 os_uptime      | The total amount of time since last boot 
 
+Some IDs require attributes and can be used like this
+
+<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
+
+Atrribute       | Description                    | Applicable ID(s)
+----------------| ------------------------------ | ---------------------------------------------
+mul             | Display value in MB, KB or GB  | mem_free, mem_used, mem_swap_total, mem_total
+
 
 
 #####If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.#####
