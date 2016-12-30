@@ -40,27 +40,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
     #include "sciter/sciter-gtk-main.cpp"
     #include <unistd.h>
 #endif
-
-template<class T>
-inline void NUM_TO_DOM_TEXT(T source, sciter::dom::element destination){
-    std::string val = std::to_string(source);
-    val.erase(val.find_last_not_of("0") + 1);
-    if(destination.is_valid()) {
-        destination.set_text((const WCHAR*)aux::utf2w(val));
-    }
-}
-
-inline void STR_TO_DOM_TEXT(std::string source, sciter::dom::element destination) {
-    if(destination.is_valid()) { \
-        destination.set_text((const WCHAR*)aux::utf2w(source)); \
-    }
-}
-
-#define DOM_TEXT_TO_NUM(source, destination) \
-            destination = aux::wtoi(source.c_str());
-
-#define DOM_TEXT_TO_STR(source, destination)\
-            destination = aux::w2utf(source.c_str()); \
+#include "util.h"
 
 
 
@@ -250,15 +230,28 @@ void CysBoard::update() {
     STR_TO_DOM_TEXT(m_cpuInfo->m_vendor, m_cpuVendor);
     NUM_TO_DOM_TEXT(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
     NUM_TO_DOM_TEXT(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+
     // os values
     STR_TO_DOM_TEXT(m_osInfo->m_name, m_osName);
     STR_TO_DOM_TEXT(m_osInfo->m_distroName, m_osDistroName);
     STR_TO_DOM_TEXT(m_osInfo->m_uptime, m_osUptime);
+
     // memory values
-    NUM_TO_DOM_TEXT(m_ramInfo->m_free, m_memFree);
-    NUM_TO_DOM_TEXT(m_ramInfo->m_used, m_memUsed);
+    NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_total,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
+                    m_memTotal);
+
+    NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_free,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
+                    m_memFree);
+
+    NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_used,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
+                    m_memUsed);
     #ifdef __linux
-        NUM_TO_DOM_TEXT(m_ramInfo->m_totalSwap, m_memTotalSwap);
+        NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_totalSwap,
+                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
+                        m_memTotalSwap);
     #endif
     // disk values
     // network values

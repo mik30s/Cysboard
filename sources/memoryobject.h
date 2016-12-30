@@ -23,6 +23,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <spdlog/spdlog.h>
 #include "meminfo.h"
 
+
 class MemoryObject : public IInfoObject{
 
 private:
@@ -51,6 +52,8 @@ public:
     double getUsedPercentage();
 
     std::string  getDeviceName();
+
+    double convert(uint64_t value, const char* modifierString);
 };
 
 #endif // MEMORYOBJECT_H
