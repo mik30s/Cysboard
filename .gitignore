@@ -6,4 +6,5 @@ build/Makefile
 build/cysboard
 *.o
 .qmake.stash
+sources/resources/compile.sh
 
