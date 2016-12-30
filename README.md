@@ -83,7 +83,7 @@ os_uptime      | The total amount of time since last boot
 
 Some IDs require attributes and can be used like this
 
-<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
+	<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
 
 Atrribute       | Description                    | Applicable ID(s)
 ----------------| ------------------------------ | ---------------------------------------------
