@@ -1,5 +1,5 @@
 debug/
-release
+release/
 build/cysboard.pro.user
 build/cysboard.pro.use*
 build/Makefile
