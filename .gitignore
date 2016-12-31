@@ -1,24 +1,6 @@
 debug/
 release/
+build/
 *.o
 .qmake.stash
-build
-!build/CMakeLists.txt
-!build/cysboard.pro
-!build/libsciter-gtk-64.so
 
-#build/cysboard.pro.user
-#build/cysboard.pro.use*
-#build/Makefile
-#build/cysboard
-#build/Cysboard
-
-
-#build/CMakeCache.txt
-#build/CMakeFiles
-#build/CMakeScripts
-#build/Makefile
-#build/cmake_install.cmake
-#build/install_manifest.txt
-#build/compile_commands.json
-#build/CTestTestfile.cmake
