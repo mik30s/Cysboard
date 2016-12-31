@@ -12,8 +12,9 @@ css for themes
 ##Compiling  
 You must have cmake >= 3.1 and gcc >= 5.6 in order to compile
 
-1. cmake .
-2. make
+1. mkdir build
+2. cmake .
+3. make
 
 
 ##Examples##
