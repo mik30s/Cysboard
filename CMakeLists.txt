@@ -51,3 +51,11 @@ include_directories(${GTK3_INCLUDE_DIRS})
 
 add_executable(Cysboard ${SOURCES})
 target_link_libraries(Cysboard pthread dl ${GTK3_LIBRARIES})
+
+# compile default theme
+execute_process(COMMAND echo "Packing resources...")
+execute_process(COMMAND deps/bin/packfolder.bin sources/resources sources/default_theme.cpp)
+# add static keyword
+execute_process(COMMAND sed -i "1i static" sources/default_theme.cpp)
+# add sciter library to build directory
+execute_process(COMMAND cp deps/bin/libsciter-gtk-64.so build/)

@@ -12,11 +12,8 @@ css for themes
 ##Compiling  
 You must have cmake >= 3.1 and gcc >= 5.6 in order to compile
 
-1. mkdir build
-2. cp deps/libsciter-gtk-64.so build
-3. cp CMakeLists.txt build && cd build
-2. cmake .
-3. make
+1. cmake .
+2. make
 
 
 ##Examples##
