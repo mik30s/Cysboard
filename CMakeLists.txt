@@ -1,0 +1,53 @@
+cmake_minimum_required (VERSION 3.1)
+project (Cysboard)
+#version
+set (Cysboard_VERSION_MAJOR 1)
+set (Cysboard_VERSION_MINOR 2)
+set (CMAKE_CXX_STANDARD 11)
+
+#includes path
+include_directories("includes")
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "build")
+
+#header files
+set (${HEADERS}
+ sources/ccpuid.h
+ sources/cpucoreobject.h
+ sources/cpuinfo.h
+ sources/cpuobject.h
+ sources/cysboard.h
+ sources/diskinfo.h
+ sources/diskobject.h
+ sources/iinfoobject.h
+ sources/linuxutil.h
+ sources/meminfo.h
+ sources/memoryobject.h
+ sources/osinfo.h
+ sources/osobject.h
+ sources/util.h
+ )
+
+ set(SOURCES
+ sources/cpucoreobject.cpp
+sources/cpuinfo_linux.cpp
+sources/cpuobject.cpp
+sources/default_theme.cpp
+sources/diskinfo_linux.cpp
+sources/diskobject.cpp
+sources/linuxutil.cpp
+sources/meminfo_linux.cpp
+sources/memoryobject.cpp
+sources/osinfo_linux.cpp
+sources/osobject.cpp
+sources/main.cpp
+)
+
+# require gtk on linux
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+include_directories(${GTK3_INCLUDE_DIRS})
+
+
+add_executable(Cysboard ${SOURCES})
+target_link_libraries(Cysboard pthread dl ${GTK3_LIBRARIES})
