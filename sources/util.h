@@ -24,8 +24,18 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include <sciter/sciter-x-window.hpp>
 
+struct ProcExecCounter{
+    std::vector<sciter::dom::element> nodes;
+
+    inline bool on_element(HELEMENT elem){
+
+        return false;
+    }
+};
+
+
 template<class T>
-static inline void NUM_TO_DOM_TEXT(T source, sciter::dom::element destination){
+static inline void num2DomText(T source, sciter::dom::element destination){
     std::string val = std::to_string(source);
     val.erase(val.find_last_not_of(".0") + 1);
     if(destination.is_valid()) {
@@ -33,10 +43,18 @@ static inline void NUM_TO_DOM_TEXT(T source, sciter::dom::element destination){
     }
 }
 
-static inline void STR_TO_DOM_TEXT(std::string source, sciter::dom::element destination) {
+static inline void string2DomText(std::string source, sciter::dom::element destination) {
     if(destination.is_valid()) { \
         destination.set_text((const WCHAR*)aux::utf2w(source)); \
     }
+}
+
+static std::vector<sciter::dom::element>
+findAllElements(sciter::dom::element root, const char* selector){
+    ProcExecCounter counter;
+    root.find_all(&counter, std::strcat("id^=", selector));
+
+    return counter.nodes;
 }
 
 #define DOM_TEXT_TO_NUM(source, destination) \

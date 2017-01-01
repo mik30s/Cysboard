@@ -153,11 +153,7 @@ bool CysBoard::configure() {
     // disk
     // networking
     // other
-//    struct ProcExecCounter: callback{
 
-//    };
-
-//    m_exec = m_root.find_all(, "id=^proc_exec");
 
 
     // meta tags for other config
@@ -225,16 +221,16 @@ void CysBoard::update() {
 
     // convert values and update
     // cpu values
-    STR_TO_DOM_TEXT(m_cpuInfo->m_name, m_cpuName);
-    STR_TO_DOM_TEXT(m_cpuInfo->m_architecture, m_cpuArchitecture);
-    STR_TO_DOM_TEXT(m_cpuInfo->m_vendor, m_cpuVendor);
+    string2DomText(m_cpuInfo->m_name, m_cpuName);
+    string2DomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
+    string2DomText(m_cpuInfo->m_vendor, m_cpuVendor);
     NUM_TO_DOM_TEXT(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
     NUM_TO_DOM_TEXT(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
 
     // os values
-    STR_TO_DOM_TEXT(m_osInfo->m_name, m_osName);
-    STR_TO_DOM_TEXT(m_osInfo->m_distroName, m_osDistroName);
-    STR_TO_DOM_TEXT(m_osInfo->m_uptime, m_osUptime);
+    string2DomText(m_osInfo->m_name, m_osName);
+    string2DomText(m_osInfo->m_distroName, m_osDistroName);
+    string2DomText(m_osInfo->m_uptime, m_osUptime);
 
     // memory values
     NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_total,

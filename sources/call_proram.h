@@ -15,44 +15,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
+#ifndef CALL_PRORAM_H
+#define CALL_PRORAM_H
 
+#include "iinfoobject.h"
 
-#include "diskobject.h"
+class  CallProgram: public IInfoObject {
+public:
+private:
 
-/**
- * @brief DiskObject::DiskObject
- */
-DiskObject::DiskObject() {
-    try {
-        m_ptrDiskInfo = new DiskInformation();
-    }
-    catch(std::exception &e) {
-        throw;
-    }
-}
+};
 
-
-/**
- * @brief DiskObject::~DiskObject
- */
-DiskObject::~DiskObject() {
-    delete m_ptrDiskInfo;
-}
-
-
-/**
- * @brief DiskObject::initialize
- * @return
- */
-void DiskObject::initialize() {
-
-}
-
-
-/**
- * @brief DiskObject::update
- */
-void DiskObject::update() {
-
-}
-
+#endif // CALL_PRORAM_H

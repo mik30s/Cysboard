@@ -35,6 +35,10 @@ public:
 
     void initialize();
     void update();
+
+    void getTotalSpace(const char* disk);
+    void getFreeSpace(const char* disk);
+    void getUsedSpace(const char* disk);
 };
 
 #endif // DISKOBJECT_H
