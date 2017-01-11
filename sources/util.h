@@ -52,7 +52,7 @@ static inline void string2DomText(std::string source, sciter::dom::element desti
 static std::vector<sciter::dom::element>
 findAllElements(sciter::dom::element root, const char* selector){
     ProcExecCounter counter;
-    root.find_all(&counter, std::strcat("id^=", selector));
+    //root.find_all(&counter, std::strcat("id^=", selector));
 
     return counter.nodes;
 }

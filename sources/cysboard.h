@@ -224,8 +224,8 @@ void CysBoard::update() {
     string2DomText(m_cpuInfo->m_name, m_cpuName);
     string2DomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
     string2DomText(m_cpuInfo->m_vendor, m_cpuVendor);
-    NUM_TO_DOM_TEXT(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
-    NUM_TO_DOM_TEXT(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    num2DomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
+    num2DomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
 
     // os values
     string2DomText(m_osInfo->m_name, m_osName);
@@ -233,19 +233,19 @@ void CysBoard::update() {
     string2DomText(m_osInfo->m_uptime, m_osUptime);
 
     // memory values
-    NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_total,
+    num2DomText(m_ramInfo->convert(m_ramInfo->m_total,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
                     m_memTotal);
 
-    NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_free,
+    num2DomText(m_ramInfo->convert(m_ramInfo->m_free,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
                     m_memFree);
 
-    NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_used,
+    num2DomText(m_ramInfo->convert(m_ramInfo->m_used,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
                     m_memUsed);
     #ifdef __linux
-        NUM_TO_DOM_TEXT(m_ramInfo->convert(m_ramInfo->m_totalSwap,
+        num2DomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
                         DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
                         m_memTotalSwap);
     #endif
