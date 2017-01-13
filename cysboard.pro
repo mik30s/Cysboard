@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console c++11
+CONFIG += console c++14
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += link_pkgconfig
@@ -7,7 +7,7 @@ QMAKE_CXXFLAGS += -Wall
 PKGCONFIG += gtk+-3.0
 
 HEADERS += sources/*.h \
-    sources/call_proram.h
+    sources/call_program.h
 
 SOURCES += sources/cpucoreobject.cpp \
            sources/theme.cpp \
@@ -17,7 +17,11 @@ SOURCES += sources/cpucoreobject.cpp \
            sources/memoryobject.cpp \
            sources/osobject.cpp \
 
-unix:SOURCES += sources/*_linux.cpp
+unix:SOURCES += sources/cpuinfo_linux.cpp \
+                sources/osinfo_linux.cpp \
+                sources/diskinfo_linux.cpp \
+                sources/meminfo_linux.cpp \
+
 win32:SOURCES += sources/*_win32.cpp
 
 INCLUDEPATH += includes

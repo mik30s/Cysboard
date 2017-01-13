@@ -1,6 +1,7 @@
 debug/
 release/
 *.o
+*.user
 .qmake.stash
 build
 

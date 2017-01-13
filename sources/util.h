@@ -24,15 +24,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include <sciter/sciter-x-window.hpp>
 
-struct ProcExecCounter{
-    std::vector<sciter::dom::element> nodes;
-
-    inline bool on_element(HELEMENT elem){
-
-        return false;
-    }
-};
-
 
 template<class T>
 static inline void num2DomText(T source, sciter::dom::element destination){
@@ -43,18 +34,29 @@ static inline void num2DomText(T source, sciter::dom::element destination){
     }
 }
 
+
 static inline void string2DomText(std::string source, sciter::dom::element destination) {
     if(destination.is_valid()) { \
         destination.set_text((const WCHAR*)aux::utf2w(source)); \
     }
 }
 
-static std::vector<sciter::dom::element>
-findAllElements(sciter::dom::element root, const char* selector){
-    ProcExecCounter counter;
-    //root.find_all(&counter, std::strcat("id^=", selector));
 
-    return counter.nodes;
+static void findAllElements(sciter::dom::element& root, const char* selector,
+                            std::vector<sciter::dom::element>& nodes)
+{
+    struct NodeCounter: public sciter::dom::callback {
+        decltype(nodes)& n;
+        NodeCounter(const decltype(nodes)vect):n(vect){}
+
+        inline bool on_element(HELEMENT elem) {
+            n.push_back(sciter::dom::element(elem));
+            return false; // continue searching
+        }
+    };
+
+    NodeCounter counter(nodes);
+    root.find_all(&counter, selector);
 }
 
 #define DOM_TEXT_TO_NUM(source, destination) \
