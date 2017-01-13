@@ -25,23 +25,24 @@ public:
     void initialize(){}
     void update(){}
 
-    static std::string execute(const char* command){
-        std::string output;
-        char buffer[100];
+    static std::string execute(const char* command) {
+        std::string output("");
+        output.reserve(128);
 
-        FILE* pipe = popen(command, "r");
+        struct pipeDeleter {
+            void operator()(FILE* ptr) const noexcept{
+                pclose(ptr);
+            }
+        };
 
-        if(!pipe){
-            output = "";
-        }
-        else{
-            while (!feof(pipe)) {
-                if(fgets(buffer, sizeof(buffer), pipe) != nullptr)
-                    output += buffer;
+        std::unique_ptr<FILE, pipeDeleter> pipe(popen(command, "r"));
+
+        if(pipe) {
+            while (!feof(pipe.get())) {
+                if(fgets(const_cast<char*>(output.data()), output.capacity(), pipe.get()) != nullptr)
+                    output += output.data();
             }
         }
-
-        pclose(pipe);
 
         return output;
     }
