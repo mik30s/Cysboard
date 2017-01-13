@@ -3,7 +3,7 @@ project (Cysboard)
 #version
 set (Cysboard_VERSION_MAJOR 1)
 set (Cysboard_VERSION_MINOR 2)
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 14)
 
 #includes path
 include_directories("includes")
