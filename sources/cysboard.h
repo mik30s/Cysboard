@@ -30,12 +30,14 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "osobject.h"
 #include "diskobject.h"
 #include "memoryobject.h"
+#include "call_program.h"
 
 #include <spdlog/spdlog.h>  // logging
 #include <sys/inotify.h>
 #include <string>
 #include <cstring>
 #include <functional>
+#include <memory>
 #ifdef __linux
     #include "sciter/sciter-gtk-main.cpp"
     #include <unistd.h>
@@ -50,10 +52,12 @@ private:
     std::shared_ptr<spdlog::logger> m_logger;
 
     // Information objects for each device
-    CpuObject*          m_cpuInfo;
-    MemoryObject*       m_ramInfo;
-    OsObject*           m_osInfo;
-    DiskObject*         m_diskInfo;
+    std::unique_ptr<CpuObject>     m_cpuInfo;
+    std::unique_ptr<MemoryObject>  m_ramInfo;
+    std::unique_ptr<OsObject>      m_osInfo;
+    std::unique_ptr<DiskObject>    m_diskInfo;
+    std::unique_ptr<CallProgram>   m_callProgram;
+
     // references to elements in the the DOM
     sciter::dom::element m_root;
     // ram dom references
@@ -71,10 +75,8 @@ private:
     sciter::dom::element m_osName;
     sciter::dom::element m_osDistroName;
     sciter::dom::element m_osUptime;
-    // other
-    sciter::dom::element m_exec;
 
-    std::vector<std::string> procExecList;
+    std::vector<sciter::dom::element> m_execNodes;
 
     double m_updateInterval;
 
@@ -102,14 +104,16 @@ CysBoard::CysBoard() :
 
     // initialize all objects
     try {
-        m_cpuInfo  = new CpuObject();
-        m_diskInfo = new DiskObject();
-        m_osInfo   = new OsObject();
-        m_ramInfo  = new MemoryObject();
+        m_cpuInfo  = std::make_unique<CpuObject>();
+        m_diskInfo = std::make_unique<DiskObject>();
+        m_osInfo   = std::make_unique<OsObject>();
+        m_ramInfo  = std::make_unique<MemoryObject>();
     }
     catch(std::exception& ex) {
         m_logger->alert("In CysBoard.cpp -> {0:s}", ex.what());
     }
+
+    m_callProgram = std::make_unique<CallProgram>();
 
     m_cpuInfo->initialize();
     m_ramInfo->initialize();
@@ -153,8 +157,7 @@ bool CysBoard::configure() {
     // disk
     // networking
     // other
-
-
+    findAllElements(m_root, "[id^=exec_]", m_execNodes);
 
     // meta tags for other config
     dom::element windowPositionX = m_root.find_first("meta[name=position_x]");
@@ -234,55 +237,55 @@ void CysBoard::update() {
 
     // memory values
     num2DomText(m_ramInfo->convert(m_ramInfo->m_total,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
-                    m_memTotal);
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
 
     num2DomText(m_ramInfo->convert(m_ramInfo->m_free,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
-                    m_memFree);
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
 
     num2DomText(m_ramInfo->convert(m_ramInfo->m_used,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
-                    m_memUsed);
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
     #ifdef __linux
         num2DomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
-                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))),
-                        m_memTotalSwap);
+                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotalSwap);
     #endif
     // disk values
     // network values
-    // execute command and output result on each update
-
+    // execute commands and output result on each update
+    for(auto node: m_execNodes) {
+        string2DomText(CallProgram::execute(
+                           DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))),
+                            node);
+    }
 
     usleep(m_updateInterval * 1000000);
 }
 
 
-/**
- * @brief Gets cpu information object
- * @return A pointer to a CpuInformation Object
- */
-CpuObject* CysBoard::getCpuInfo(){ return m_cpuInfo; }
+///**
+// * @brief Gets cpu information object
+// * @return A pointer to a CpuInformation Object
+// */
+//CpuObject* CysBoard::getCpuInfo(){ return m_cpuInfo; }
 
 
-/**
- * @brief CysBoard::getRamInfo
- * @return A Pointer to a RamInformation Object
- */
-MemoryObject* CysBoard::getRamInfo(){ return m_ramInfo; }
+///**
+// * @brief CysBoard::getRamInfo
+// * @return A Pointer to a RamInformation Object
+// */
+//MemoryObject* CysBoard::getRamInfo(){ return m_ramInfo; }
 
 
-/**
- * @brief CysBoard::getOsInfo
- * @return A pointer to an OsInformation Object
- */
-OsObject* CysBoard::getOsInfo(){ return m_osInfo; }
+///**
+// * @brief CysBoard::getOsInfo
+// * @return A pointer to an OsInformation Object
+// */
+//OsObject* CysBoard::getOsInfo(){ return m_osInfo; }
 
 
-/**
- * @brief CysBoard::getDiskInfo
- * @return A pointer to a DiskInformation Object
- */
-DiskObject* CysBoard::getDiskInfo(){ return m_diskInfo; }
+///**
+// * @brief CysBoard::getDiskInfo
+// * @return A pointer to a DiskInformation Object
+// */
+//DiskObject* CysBoard::getDiskInfo(){ return m_diskInfo; }
 
 #endif // CYSBOARD_H

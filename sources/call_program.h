@@ -22,8 +22,29 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 class  CallProgram: public IInfoObject {
 public:
-private:
+    void initialize(){}
+    void update(){}
 
+    static std::string execute(const char* command){
+        std::string output;
+        char buffer[100];
+
+        FILE* pipe = popen(command, "r");
+
+        if(!pipe){
+            output = "";
+        }
+        else{
+            while (!feof(pipe)) {
+                if(fgets(buffer, sizeof(buffer), pipe) != nullptr)
+                    output += buffer;
+            }
+        }
+
+        pclose(pipe);
+
+        return output;
+    }
 };
 
 #endif // CALL_PRORAM_H
