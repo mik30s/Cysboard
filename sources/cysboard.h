@@ -251,7 +251,7 @@ void CysBoard::update() {
     // disk values
     // network values
     // execute commands and output result on each update
-    for(auto node: m_execNodes) {
+    for(auto& node: m_execNodes) {
         string2DomText(CallProgram::execute(
                            DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))),
                             node);

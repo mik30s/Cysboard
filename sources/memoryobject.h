@@ -37,8 +37,6 @@ public:
     void initialize();
     void update();
 
-    std::string m_deviceName;
-
     uint64_t m_total;
     uint64_t m_totalSwap;
     uint64_t m_free, m_used;
@@ -50,8 +48,6 @@ public:
     uint64_t getUsed();
     double getFreePercentage();
     double getUsedPercentage();
-
-    std::string  getDeviceName();
 
     double convert(uint64_t value, const char* modifierString);
 };

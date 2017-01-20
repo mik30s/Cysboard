@@ -15,9 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-/*
- * Contains MACROs and functions for handling common or repetitive tasks
- */
+
+// MACROs and functions for handling common or repetitive tasks
 
 #ifndef UTIL_H
 #define UTIL_H
@@ -25,6 +24,11 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <sciter/sciter-x-window.hpp>
 
 
+/**
+ * @brief Converts a numeric type to and sciter DOM text
+ * @param source a numeric type
+ * @param destination  a DOM element
+ */
 template<class T>
 static inline void num2DomText(T source, sciter::dom::element destination){
     std::string val = std::to_string(source);
@@ -35,13 +39,24 @@ static inline void num2DomText(T source, sciter::dom::element destination){
 }
 
 
+/**
+ * @brief Converts an std::string to and sciter DOM text
+ * @param source
+ * @param destination
+ */
 static inline void string2DomText(std::string source, sciter::dom::element destination) {
-    if(destination.is_valid()) { \
-        destination.set_text((const WCHAR*)aux::utf2w(source)); \
+    if(destination.is_valid()) {
+        destination.set_text((const WCHAR*)aux::utf2w(source));
     }
 }
 
 
+/**
+ * @brief find all the elements in the DOM with the selector
+ * @param root The root DOM element
+ * @param selector CSS selector for the nodes
+ * @param nodes a vector to hold the nodes found
+ */
 static void findAllElements(sciter::dom::element& root, const char* selector,
                             std::vector<sciter::dom::element>& nodes)
 {
