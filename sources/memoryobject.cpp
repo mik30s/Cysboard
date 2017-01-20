@@ -57,18 +57,6 @@ void MemoryObject::initialize(){
 
 
 /**
- * @brief Get the RAM chip name
- *
- * Not yet implemented.
- *
- * @return
- */
-std::string MemoryObject::getDeviceName(){
-    return "";
-}
-
-
-/**
  * @brief MemoryObject::update
  */
 void MemoryObject::update(){
@@ -131,19 +119,18 @@ double MemoryObject::getUsedPercentage(){
  */
 double MemoryObject::convert(uint64_t value, const char* multiplier){
     double retVal =  0;
-    //const uint64_t GIGABYTE = 1073741824;
     const uint64_t MEGABYTE = 1048576;
     const uint64_t KILOBYTE = 1024;
 
-    if(std::strncmp("KB", multiplier, 2) >= 0){
-        // do nothing, incoming values are already in KB
+    if(std::strncmp("KB", multiplier, 2) == 0){
+        return value;
     }
-    else if(std::strncmp("MB", multiplier, 2) >= 0){
+    if(std::strncmp("MB", multiplier, 2) == 0){
         retVal = (double) value / KILOBYTE;
     }
-    else if(std::strncmp("GB", multiplier, 2) >= 0){
+    if(std::strncmp("GB", multiplier, 2) == 0){
         retVal = (double) value / MEGABYTE;
     }
 
-    return std::ceil(retVal);
+    return std::floor(retVal * 100) / 100;
 }

@@ -3,7 +3,7 @@ Cysboard
 A lightweight system monitor similar to conky but with html and
 css for themes
 
-#Usage#
+#Usage
 1. Create a theme file called main.html in ~/.config/cysboard/ (There must be a file name 'main.html')
 	If a 'main.html' file does not exist in the config directory cysboard will start with a default theme.
 2. Add your html code with any of the listed ids below in html tags for device info.
@@ -11,29 +11,27 @@ css for themes
 
 
 ##Compiling  
-You must have cmake >= 3.1 and gcc >= 5.6 in order to compile
+You must have cmake >= 3.1 and gcc >= 5.4 in order to compile
 
 1. mkdir build
 2. cmake .
 3. make
 
 
-##Examples##
-![cysboard_default](https://cloud.githubusercontent.com/assets/3809183/21536018/bdfcee36-cd42-11e6-95de-2e8491c49ce5.png)
+##Examples
+![cysboard_default](https://cloud.githubusercontent.com/assets/3809183/22162361/04db2e0c-df14-11e6-8448-45829ca36e8b.png)
 
 Use ids like the following 
 
-    <div>
+    <div
 	   <!-- os info -->
 	    <div .section #osinfo>
 	        <div >SYSTEM</div>
-	        <div>
-	        	<div .section-content-child>
-	        		<p>name:   <span id="os_name"></span></p>
-	        		<p>distro: <span id="os_distro_name"></span></p>
-	        		<p>uptime: <span id="os_uptime"></span></p>
-	        	</div>
-	        </div>
+            <div .section-content-child>
+                <p>name:   <span id="os_name"></span></p>
+                <p>distro: <span id="os_distro_name"></span></p>
+                <p>uptime: <span id="os_uptime"></span></p>
+            </div>
 	    </div>
 	    <!-- cpu info -->
 	    <div id="cpuinfo">
@@ -57,7 +55,7 @@ Use ids like the following
 
 See sources/resources/default.html for a working theme.
 
-##IDs##
+##IDs
 A list of currently supported information from sources. Add any of
 them as an *id* or *class* attribute for a tag in your theme file.
 
@@ -81,10 +79,12 @@ Some IDs require attributes and can be used like this
 
 	<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
 
-Atrribute       | Description                    | Applicable ID(s)
-----------------| ------------------------------ | ---------------------------------------------
-mul             | Display value in MB, KB or GB  | mem_free, mem_used, mem_swap_total, mem_total
-cmd             | Name program to execute        | exec_#
+Atrribute       | Description                       | Applicable ID(s)
+----------------| --------------------------------- | ---------------------------------------------
+mul             | Display value in MB, KB or GB     | mem_free, mem_used, mem_swap_total, mem_total
+cmd             | Path of program to execute        | exec_#
 
 
-
+##Known Issues
+1. Os uptime does not update on some systems.
+2. Program crashes sometimes when editing themes.
