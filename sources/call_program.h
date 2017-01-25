@@ -39,7 +39,7 @@ public:
 
         if(pipe) {
             while (!feof(pipe.get())) {
-                if(fgets(const_cast<char*>(output.data()), output.capacity(), pipe.get()) != nullptr);
+                if(fgets(const_cast<char*>(output.data()), output.capacity(), pipe.get()) != nullptr)
                     output += output.data();
             }
         }

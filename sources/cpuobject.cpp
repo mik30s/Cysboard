@@ -51,15 +51,6 @@ CpuObject::~CpuObject(){
 }
 
 
-/**
- * @brief CpuObject::operator =
- * @param reg
- * @return
- */
-CpuObject& CpuObject::operator=(CpuObject &reg){
-    return reg;
-}
-
 
 /**
  * @brief CpuObject::initialize

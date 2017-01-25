@@ -99,7 +99,9 @@ uint64_t MemoryInformation::getTotalAmount(){
  * @return
  */
 uint64_t MemoryInformation::getFreeAmount(){
-    return readMemInfoField(MEMORY_FREE);
+    return readMemInfoField(MEMORY_FREE)
+                    + readMemInfoField(MEMORY_BUFFERS)
+                    + readMemInfoField(MEMORY_CACHED);
 }
 
 

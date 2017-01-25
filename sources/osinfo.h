@@ -27,6 +27,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <map>
 #include <cmath>
 #include <exception>
+#include "util.h"
 
 #ifdef __linux__
     // defines for fields in /etc/lsb_release

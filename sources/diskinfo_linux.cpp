@@ -134,23 +134,6 @@ std::string DiskInformation::getFullPath(const char* diskName)
 }
 
 
-/**
- * @brief Uses regexp to get the integer value of the Nth number in a string
- * @param text
- * @param pos
- * @return
- */
-uint64_t getNthNumber(std::string text, int pos)
-{
-    const std::regex regx("(?:\\d+\\s+){" + std::to_string(pos) + "}(\\d+).*");
 
-    std::smatch matchingStrings;
-
-    if(std::regex_match(text, matchingStrings, regx)) {
-        return (uint64_t)std::stoll(matchingStrings[1]);
-    }
-
-    return 0;
-}
 
 

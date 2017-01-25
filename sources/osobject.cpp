@@ -25,7 +25,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
  */
 OsObject::OsObject(){
     try{
-        m_osInfo = new OSInformation();
+        m_osInfo = std::make_unique<OSInformation>();
     }
     catch(std::exception &ex){ throw; }
 }

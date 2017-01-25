@@ -10,7 +10,6 @@ HEADERS += sources/*.h \
     sources/call_program.h
 
 SOURCES += sources/cpucoreobject.cpp \
-           sources/theme.cpp \
            sources/main.cpp \
            sources/cpuobject.cpp \
            sources/diskobject.cpp \
