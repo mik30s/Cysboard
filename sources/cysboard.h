@@ -76,6 +76,7 @@ private:
     std::vector<sciter::dom::element> m_execNodes;
 
     double m_updateInterval;
+    bool m_isFirstRun;
 
 public:
     CysBoard();
@@ -117,6 +118,7 @@ CysBoard::CysBoard() :
  */
 bool CysBoard::configure() {
     bool retVal = true;
+    m_isFirstRun = true;
 
     m_cpuInfo->initialize();
     m_ramInfo->initialize();
@@ -197,9 +199,7 @@ bool CysBoard::configure() {
  * @brief Updates information from all sources
  *
  * Updates all system information by calling
- * each module objects update method. A signal is emitted on each
- * object to notify the theme/qml interface of a change in data.
- * Only objects whose data can change, should be called through update.
+ * each module objects update method and updating the DOM elements.
  */
 void CysBoard::update() {
     m_cpuInfo->update();
@@ -207,34 +207,35 @@ void CysBoard::update() {
     m_diskInfo->update();
     m_osInfo->update();
 
-    // convert values and update
-    // cpu values
-    string2DomText(m_cpuInfo->m_name, m_cpuName);
-    string2DomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
-    string2DomText(m_cpuInfo->m_vendor, m_cpuVendor);
-    num2DomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
-    num2DomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    if(m_isFirstRun){
+        // cpu values
+        string2DomText(m_cpuInfo->m_name, m_cpuName);
+        string2DomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
+        string2DomText(m_cpuInfo->m_vendor, m_cpuVendor);
+        num2DomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
+        // os values
+        string2DomText(m_osInfo->m_name, m_osName);
+        string2DomText(m_osInfo->m_distroName, m_osDistroName);
 
-    // os values
-    string2DomText(m_osInfo->m_name, m_osName);
-    string2DomText(m_osInfo->m_distroName, m_osDistroName);
-    string2DomText(m_osInfo->m_uptime, m_osUptime);
-
-    // memory values
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_total,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
-
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_free,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
-
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_used,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
-    #ifdef __linux
+        // memory values
+        num2DomText(m_ramInfo->convert(m_ramInfo->m_total,
+                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
         num2DomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
                         DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotalSwap);
-    #endif
-    // disk values
-    // network values
+
+        m_isFirstRun = false;
+    }
+
+    // cpu
+    num2DomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    // os
+    string2DomText(m_osInfo->m_uptime, m_osUptime);
+    // mem
+    num2DomText(m_ramInfo->convert(m_ramInfo->m_free,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
+    num2DomText(m_ramInfo->convert(m_ramInfo->m_used,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
+
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
         string2DomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
