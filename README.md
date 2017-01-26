@@ -18,7 +18,7 @@ You must have cmake >= 3.1 and gcc >= 5.4 in order to compile
 
 
 ##Examples
-![cysboard_default](https://cloud.githubusercontent.com/assets/3809183/22162361/04db2e0c-df14-11e6-8448-45829ca36e8b.png)
+<img src="https://cloud.githubusercontent.com/assets/3809183/22354353/94b1d4e2-e3ea-11e6-813a-84a20845e275.gif" />
 
 Use ids like the following 
 
@@ -87,10 +87,13 @@ os_name        | The name of the OS
 os_distro_name | The distribution name (*Linux only*)       
 os_uptime      | The total amount of time since last boot
 exec_#         | Execute a program and display its output eg. *exec_0, exec_1* etc.
+cpu_usage_#    | Get a cpu core's usage percentage eg. *cpu_usage_0, cpu_usage_1* etc.
 
 Some IDs require attributes and can be used like this
 
+```html
 	<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
+```
 
 Atrribute       | Description                       | Applicable ID(s)
 ----------------| --------------------------------- | ---------------------------------------------
