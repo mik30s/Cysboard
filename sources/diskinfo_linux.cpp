@@ -15,12 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-
-
 #include "diskinfo.h"
-
-uint64_t getNthNumber(std::string text, int pos);
-
 
 /**
  * @brief DiskInformation::DiskInformation
@@ -41,7 +36,7 @@ DiskInformation::DiskInformation()
     while(nextDir != nullptr) {
         if(std::regex_match(nextDir->d_name, regexp)) {
             // get directories subdirectories
-            std::string path = std::string(SYSFS_DIRECTORY) + nextDir->d_name;
+            std::string&& path = std::string(SYSFS_DIRECTORY) + nextDir->d_name;
 
             auto subDir = opendir(path.c_str());
 
@@ -67,10 +62,9 @@ DiskInformation::DiskInformation()
 }
 
 
-/**
- * @brief DiskInformation::~DiskInformation
- */
-DiskInformation::~DiskInformation() {}
+DiskInformation::~DiskInformation(){
+    closedir(m_dirDisks);
+}
 
 
 /**

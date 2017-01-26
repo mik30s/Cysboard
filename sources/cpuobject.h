@@ -30,7 +30,7 @@ class CpuObject
 private:
     std::unique_ptr<CpuInformation> m_ptrCpuInfo;
     std::shared_ptr<spdlog::logger> m_logger;
-    std::vector<CpuCoreObject*> m_ptrCores;
+    std::vector<std::unique_ptr<CpuCoreObject>> m_ptrCores;
 
 public:
     CpuObject();
@@ -50,7 +50,7 @@ public:
     int getNumberOfCores();
     double getTotalUsagePercentage();
 
-    std::vector<CpuCoreObject*>& getCores();
+    std::vector<std::unique_ptr<CpuCoreObject>>& getCores();
 
     void initialize();
     void update();

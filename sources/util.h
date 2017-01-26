@@ -27,6 +27,29 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 using string_view = std::experimental::string_view;
 
+template<typename T>
+struct NodeTextUpdater{
+    T& supplementary;
+    int counter;
+    NodeTextUpdater(const T& ref):counter(0), supplementary(ref){}
+    void operator()(sciter::dom::element& node){
+        counter++;
+        if(node.is_valid()){
+            numToDomText(supplementary[counter], node);
+        }
+    }
+};
+
+/**
+ * @brief pipeDeleter struct
+ * Closes a file stream
+ */
+struct pipeDeleter {
+    void operator()(FILE* ptr) const noexcept{
+        pclose(ptr);
+    }
+};
+
 /**
  * @brief Uses regexp to get the integer value of the Nth number in a string
  * @param text
@@ -64,7 +87,7 @@ static inline void num2DomText(const T& source, sciter::dom::element& destinatio
  * @param source a numeric type
  * @param destination  a DOM element
  */
-static inline void num2DomText(const int& source, sciter::dom::element& destination){
+static inline void numToDomText(const int& source, sciter::dom::element& destination){
     std::string&& val = std::to_string(source);
 
     if(destination.is_valid()) {
@@ -78,7 +101,7 @@ static inline void num2DomText(const int& source, sciter::dom::element& destinat
  * @param source
  * @param destination
  */
-static inline void string2DomText(const std::string& source, sciter::dom::element& destination) {
+static inline void stringToDomText(const std::string& source, sciter::dom::element& destination) {
     if(destination.is_valid()) {
         destination.set_text((const WCHAR*)aux::utf2w(source));
     }

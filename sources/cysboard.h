@@ -35,6 +35,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <string>
 #include <cstring>
 #include <functional>
+#include <algorithm>
 #include <memory>
 #ifdef __linux
     #include "sciter/sciter-gtk-main.cpp"
@@ -68,6 +69,7 @@ private:
     sciter::dom::element m_cpuVendor;
     sciter::dom::element m_cpuArchitecture;
     sciter::dom::element m_cpuNumOfCores;
+    std::vector<sciter::dom::element> m_cpuCoreNodes;
     // os dom references
     sciter::dom::element m_osName;
     sciter::dom::element m_osDistroName;
@@ -140,6 +142,7 @@ bool CysBoard::configure() {
     m_cpuArchitecture = m_root.find_first("#cpu_arch");
     m_cpuVendor = m_root.find_first("#cpu_vendor");
     m_cpuNumOfCores = m_root.find_first("#cpu_num_cores");
+    findAllElements(m_root, "[id^=cpu_usage_]", m_cpuCoreNodes);
     // os
     m_osName  = m_root.find_first("#os_name");
     m_osDistroName = m_root.find_first("#os_distro_name");
@@ -160,8 +163,6 @@ bool CysBoard::configure() {
         DOM_TEXT_TO_NUM(windowPositionY.get_attribute("content"), posY);
         // move window to position
         // Note: for absolute positioning set margin of <body> to 0 in stylesheet
-//        m_logger->info("X {0:d}", posX);
-//        m_logger->info("Y {0:d}", posY);
         #ifdef __linux
             gtk_window_move(sciter::gwindow(this->get_hwnd()), posX, posY);
         #endif
@@ -175,9 +176,6 @@ bool CysBoard::configure() {
         uint width, height;
         DOM_TEXT_TO_NUM(windowWidth.get_attribute("content"), width);
         DOM_TEXT_TO_NUM(windowHeight.get_attribute("content"), height);
-
-//        m_logger->info("Width {0:d}", width);
-//        m_logger->info("Height {0:d}", height);
         #ifdef __linux
             gtk_window_set_resizable(sciter::gwindow(this->get_hwnd()), TRUE);
             gtk_window_resize(sciter::gwindow(this->get_hwnd()), width, height);
@@ -209,36 +207,40 @@ void CysBoard::update() {
 
     if(m_isFirstRun){
         // cpu values
-        string2DomText(m_cpuInfo->m_name, m_cpuName);
-        string2DomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
-        string2DomText(m_cpuInfo->m_vendor, m_cpuVendor);
-        num2DomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
+        stringToDomText(m_cpuInfo->m_name, m_cpuName);
+        stringToDomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
+        stringToDomText(m_cpuInfo->m_vendor, m_cpuVendor);
+        numToDomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
         // os values
-        string2DomText(m_osInfo->m_name, m_osName);
-        string2DomText(m_osInfo->m_distroName, m_osDistroName);
+        stringToDomText(m_osInfo->m_name, m_osName);
+        stringToDomText(m_osInfo->m_distroName, m_osDistroName);
 
         // memory values
-        num2DomText(m_ramInfo->convert(m_ramInfo->m_total,
+        numToDomText(m_ramInfo->convert(m_ramInfo->m_total,
                         DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
-        num2DomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
+        numToDomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
                         DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotalSwap);
 
         m_isFirstRun = false;
     }
 
     // cpu
-    num2DomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    numToDomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    for(int i = 0; i < m_cpuCoreNodes.size(); i++){
+        numToDomText(m_cpuInfo->getCores()[i]->m_usePercentage, m_cpuCoreNodes[i]);
+    }
+
     // os
-    string2DomText(m_osInfo->m_uptime, m_osUptime);
+    stringToDomText(m_osInfo->m_uptime, m_osUptime);
     // mem
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_free,
+    numToDomText(m_ramInfo->convert(m_ramInfo->m_free,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_used,
+    numToDomText(m_ramInfo->convert(m_ramInfo->m_used,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
 
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
-        string2DomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
+        stringToDomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
     }
 
     usleep(m_updateInterval * 1000000);
