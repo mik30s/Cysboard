@@ -24,7 +24,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
  */
 DiskObject::DiskObject() {
     try {
-        m_ptrDiskInfo = new DiskInformation();
+        m_ptrDiskInfo = std::make_unique<DiskInformation>();
     }
     catch(std::exception &e) {
         throw;
@@ -33,19 +33,11 @@ DiskObject::DiskObject() {
 
 
 /**
- * @brief DiskObject::~DiskObject
- */
-DiskObject::~DiskObject() {
-    delete m_ptrDiskInfo;
-}
-
-
-/**
  * @brief DiskObject::initialize
  * @return
  */
 void DiskObject::initialize() {
-
+    // working on this
 }
 
 
@@ -53,6 +45,6 @@ void DiskObject::initialize() {
  * @brief DiskObject::update
  */
 void DiskObject::update() {
-
+    // working on this
 }
 

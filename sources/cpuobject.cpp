@@ -32,7 +32,7 @@ CpuObject::CpuObject() {
     m_logger = spdlog::get("cysboardLogger");
 
     try{
-        m_ptrCpuInfo = new CpuInformation();
+        m_ptrCpuInfo = std::make_unique<CpuInformation>();
     }
     catch(std::exception &e){
         //m_logger->alert("{0:s}",e.what());
@@ -45,8 +45,6 @@ CpuObject::CpuObject() {
  * @brief CpuObject::~CpuObject
  */
 CpuObject::~CpuObject(){
-    delete m_ptrCpuInfo;
-
     m_ptrCores.clear();
 }
 
@@ -125,7 +123,7 @@ double CpuObject::getTotalUsagePercentage(){return m_totalUsagePercent;}
  * @return
  *
  */
-std::vector<CpuCoreObject*> CpuObject::getCores(){return m_ptrCores;}
+std::vector<CpuCoreObject*>& CpuObject::getCores(){return m_ptrCores;}
 
 
 

@@ -27,11 +27,12 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "cpuinfo.h"
 #include "cpucoreobject.h"
 
-class CpuObject : public IInfoObject
+class CpuObject
 {
 private:
-    CpuInformation* m_ptrCpuInfo;
+    std::unique_ptr<CpuInformation> m_ptrCpuInfo;
     std::shared_ptr<spdlog::logger> m_logger;
+    std::vector<CpuCoreObject*> m_ptrCores;
 
 public:
     CpuObject();
@@ -44,8 +45,6 @@ public:
     int m_numberOfCores;
     double m_totalUsagePercent;
 
-    std::vector<CpuCoreObject*> m_ptrCores;
-
     std::string getName();
     std::string getVendor();
     std::string getArchitecture();
@@ -53,7 +52,7 @@ public:
     int getNumberOfCores();
     double getTotalUsagePercentage();
 
-    std::vector<CpuCoreObject*> getCores();
+    std::vector<CpuCoreObject*>& getCores();
 
     void initialize();
     void update();

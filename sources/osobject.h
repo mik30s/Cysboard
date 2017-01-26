@@ -22,7 +22,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "osinfo.h"
 #include "iinfoobject.h"
 
-class OsObject : public IInfoObject
+class OsObject
 {
 
 private:

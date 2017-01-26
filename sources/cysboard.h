@@ -43,7 +43,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "util.h"
 
 
-
 class CysBoard : public sciter::window
 {
 private:
@@ -80,7 +79,7 @@ private:
 
 public:
     CysBoard();
-    ~CysBoard();
+    ~CysBoard()=default;
 
     bool configure();
     void update();
@@ -109,12 +108,6 @@ CysBoard::CysBoard() :
 
     m_callProgram = std::make_unique<CallProgram>();
 }
-
-
-/**
- * @brief CysBoard::~CysBoard
- */
-CysBoard::~CysBoard(){}
 
 
 /**

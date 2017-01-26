@@ -27,7 +27,7 @@ MemoryObject::MemoryObject(){
     m_logger = spdlog::get("cysboardLogger");
 
     try{
-        m_ptrMemInfo = new MemoryInformation();
+        m_ptrMemInfo = std::unique_ptr<MemoryInformation>();
     }
     catch(std::exception& ex){
         throw;
@@ -38,7 +38,7 @@ MemoryObject::MemoryObject(){
 /**
  * @brief MemoryObject::~MemoryObject
  */
-MemoryObject::~MemoryObject(){}
+//MemoryObject::~MemoryObject(){}
 
 
 /**
