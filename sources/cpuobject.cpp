@@ -32,7 +32,7 @@ CpuObject::CpuObject() {
     m_logger = spdlog::get("cysboardLogger");
 
     try{
-        m_ptrCpuInfo = new CpuInformation();
+        m_ptrCpuInfo = std::make_unique<CpuInformation>();
     }
     catch(std::exception &e){
         //m_logger->alert("{0:s}",e.what());
@@ -45,8 +45,6 @@ CpuObject::CpuObject() {
  * @brief CpuObject::~CpuObject
  */
 CpuObject::~CpuObject(){
-    delete m_ptrCpuInfo;
-
     m_ptrCores.clear();
 }
 
@@ -63,7 +61,7 @@ void CpuObject::initialize(){
     m_numberOfCores = m_ptrCpuInfo->getNumberOfCores();
 
     for(int core = 0; core < m_numberOfCores; core++){
-        m_ptrCores.push_back(new CpuCoreObject());
+        m_ptrCores.push_back(std::move(std::make_unique<CpuCoreObject>()));
     }
 }
 
@@ -72,13 +70,9 @@ void CpuObject::initialize(){
  * @brief CpuObject::update
  */
 void CpuObject::update(){
-    for(int core = 1; core < m_numberOfCores+1; core++){
-        CpuCoreObject* ptrCore = dynamic_cast<CpuCoreObject*>(m_ptrCores[core-1]);
-
-        ptrCore->m_usePercentage = std::ceil(m_ptrCpuInfo->getCoreUsagePercentage(core));
-        ptrCore->m_currentSpeed = std::ceil(m_ptrCpuInfo->getCurrentSpeed(core));
-
-        // m_logger->info("{0:f}",ptr->m_currentSpeed);
+    for(int core = 1, i = 0; core < m_numberOfCores + 1; core++, i++){
+        m_ptrCores[i]->m_usePercentage = std::ceil(m_ptrCpuInfo->getCoreUsagePercentage(core));
+        m_ptrCores[i]->m_currentSpeed = std::ceil(m_ptrCpuInfo->getCurrentSpeed(core));
     }
 
     m_totalUsagePercent = ROUND(m_ptrCpuInfo->getTotalUsagePercentage());
@@ -125,7 +119,8 @@ double CpuObject::getTotalUsagePercentage(){return m_totalUsagePercent;}
  * @return
  *
  */
-std::vector<CpuCoreObject*> CpuObject::getCores(){return m_ptrCores;}
+std::vector<std::unique_ptr<CpuCoreObject>>&
+CpuObject::getCores(){return m_ptrCores;}
 
 
 

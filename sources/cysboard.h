@@ -35,13 +35,13 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <string>
 #include <cstring>
 #include <functional>
+#include <algorithm>
 #include <memory>
 #ifdef __linux
     #include "sciter/sciter-gtk-main.cpp"
     #include <unistd.h>
 #endif
 #include "util.h"
-
 
 
 class CysBoard : public sciter::window
@@ -69,6 +69,7 @@ private:
     sciter::dom::element m_cpuVendor;
     sciter::dom::element m_cpuArchitecture;
     sciter::dom::element m_cpuNumOfCores;
+    std::vector<sciter::dom::element> m_cpuCoreNodes;
     // os dom references
     sciter::dom::element m_osName;
     sciter::dom::element m_osDistroName;
@@ -77,10 +78,11 @@ private:
     std::vector<sciter::dom::element> m_execNodes;
 
     double m_updateInterval;
+    bool m_isFirstRun;
 
 public:
     CysBoard();
-    ~CysBoard();
+    ~CysBoard()=default;
 
     bool configure();
     void update();
@@ -112,18 +114,13 @@ CysBoard::CysBoard() :
 
 
 /**
- * @brief CysBoard::~CysBoard
- */
-CysBoard::~CysBoard(){}
-
-
-/**
  * @brief Configures cysboard according to settings found in <meta> tags
  *        The window position and dimension are mandatory, others are optional
  * @return True if success or False is failed
  */
 bool CysBoard::configure() {
     bool retVal = true;
+    m_isFirstRun = true;
 
     m_cpuInfo->initialize();
     m_ramInfo->initialize();
@@ -145,6 +142,7 @@ bool CysBoard::configure() {
     m_cpuArchitecture = m_root.find_first("#cpu_arch");
     m_cpuVendor = m_root.find_first("#cpu_vendor");
     m_cpuNumOfCores = m_root.find_first("#cpu_num_cores");
+    findAllElements(m_root, "[id^=cpu_usage_]", m_cpuCoreNodes);
     // os
     m_osName  = m_root.find_first("#os_name");
     m_osDistroName = m_root.find_first("#os_distro_name");
@@ -165,8 +163,6 @@ bool CysBoard::configure() {
         DOM_TEXT_TO_NUM(windowPositionY.get_attribute("content"), posY);
         // move window to position
         // Note: for absolute positioning set margin of <body> to 0 in stylesheet
-//        m_logger->info("X {0:d}", posX);
-//        m_logger->info("Y {0:d}", posY);
         #ifdef __linux
             gtk_window_move(sciter::gwindow(this->get_hwnd()), posX, posY);
         #endif
@@ -180,9 +176,6 @@ bool CysBoard::configure() {
         uint width, height;
         DOM_TEXT_TO_NUM(windowWidth.get_attribute("content"), width);
         DOM_TEXT_TO_NUM(windowHeight.get_attribute("content"), height);
-
-//        m_logger->info("Width {0:d}", width);
-//        m_logger->info("Height {0:d}", height);
         #ifdef __linux
             gtk_window_set_resizable(sciter::gwindow(this->get_hwnd()), TRUE);
             gtk_window_resize(sciter::gwindow(this->get_hwnd()), width, height);
@@ -204,9 +197,7 @@ bool CysBoard::configure() {
  * @brief Updates information from all sources
  *
  * Updates all system information by calling
- * each module objects update method. A signal is emitted on each
- * object to notify the theme/qml interface of a change in data.
- * Only objects whose data can change, should be called through update.
+ * each module objects update method and updating the DOM elements.
  */
 void CysBoard::update() {
     m_cpuInfo->update();
@@ -214,37 +205,42 @@ void CysBoard::update() {
     m_diskInfo->update();
     m_osInfo->update();
 
-    // convert values and update
-    // cpu values
-    string2DomText(m_cpuInfo->m_name, m_cpuName);
-    string2DomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
-    string2DomText(m_cpuInfo->m_vendor, m_cpuVendor);
-    num2DomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
-    num2DomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    if(m_isFirstRun){
+        // cpu values
+        stringToDomText(m_cpuInfo->m_name, m_cpuName);
+        stringToDomText(m_cpuInfo->m_architecture, m_cpuArchitecture);
+        stringToDomText(m_cpuInfo->m_vendor, m_cpuVendor);
+        numToDomText(m_cpuInfo->m_numberOfCores, m_cpuNumOfCores);
+        // os values
+        stringToDomText(m_osInfo->m_name, m_osName);
+        stringToDomText(m_osInfo->m_distroName, m_osDistroName);
 
-    // os values
-    string2DomText(m_osInfo->m_name, m_osName);
-    string2DomText(m_osInfo->m_distroName, m_osDistroName);
-    string2DomText(m_osInfo->m_uptime, m_osUptime);
-
-    // memory values
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_total,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
-
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_free,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
-
-    num2DomText(m_ramInfo->convert(m_ramInfo->m_used,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
-    #ifdef __linux
-        num2DomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
+        // memory values
+        numToDomText(m_ramInfo->convert(m_ramInfo->m_total,
+                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
+        numToDomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
                         DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotalSwap);
-    #endif
-    // disk values
-    // network values
+
+        m_isFirstRun = false;
+    }
+
+    // cpu
+    numToDomText(m_cpuInfo->m_totalUsagePercent, m_cpuUsage);
+    for(int i = 0; i < m_cpuCoreNodes.size(); i++){
+        numToDomText(m_cpuInfo->getCores()[i]->m_usePercentage, m_cpuCoreNodes[i]);
+    }
+
+    // os
+    stringToDomText(m_osInfo->m_uptime, m_osUptime);
+    // mem
+    numToDomText(m_ramInfo->convert(m_ramInfo->m_free,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
+    numToDomText(m_ramInfo->convert(m_ramInfo->m_used,
+                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
+
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
-        string2DomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
+        stringToDomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
     }
 
     usleep(m_updateInterval * 1000000);

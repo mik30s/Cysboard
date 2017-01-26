@@ -24,14 +24,14 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "iinfoobject.h"
 #include "diskinfo.h"
 
-class DiskObject : public IInfoObject
+class DiskObject
 {
 private:
-    DiskInformation* m_ptrDiskInfo;
+    std::unique_ptr<DiskInformation> m_ptrDiskInfo;
 
 public:
     DiskObject();
-    ~DiskObject();
+    ~DiskObject()=default;
 
     void initialize();
     void update();

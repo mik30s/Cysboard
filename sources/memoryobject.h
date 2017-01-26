@@ -24,15 +24,15 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "meminfo.h"
 
 
-class MemoryObject : public IInfoObject{
+class MemoryObject{
 
 private:
-    MemoryInformation* m_ptrMemInfo;
+    std::unique_ptr<MemoryInformation> m_ptrMemInfo;
     std::shared_ptr<spdlog::logger> m_logger;
 
 public:
     MemoryObject();
-    ~MemoryObject();
+    ~MemoryObject()=default;
 
     void initialize();
     void update();
