@@ -20,7 +20,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #ifndef IINFOOBJECT_H
 #define IINFOOBJECT_H
 
-class IInfoObject {
+class IInfoObject
+{
 public:
     virtual void initialize() = 0;
     virtual void update() = 0;

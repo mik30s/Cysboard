@@ -35,7 +35,6 @@ int uimain(std::function<int()> run)
     auto logger = spdlog::stdout_logger_mt("logger");
     logger->set_level(spdlog::level::debug);
 
-
     // loaded default resources
     sciter::archive::instance().open(aux::elements_of(resources));
 
@@ -70,14 +69,18 @@ int uimain(std::function<int()> run)
         const int pollTimeOut = 50;
         std::string inotifyBuffer;
         inotifyBuffer.reserve(MISC_BUF_LEN);
+        struct pollfd pfd = {inotifyfd, POLLIN, 0 };
 
         // check for theme directory changes and reload file
         while(true) {
-            struct pollfd pfd = {inotifyfd, POLLIN, 0 };
             if(poll(&pfd, 1, pollTimeOut) > 0) {
                 int len = read(inotifyfd, (void*)inotifyBuffer.data(), pollTimeOut);
+                std::cout << "Theme changed"<< std::endl;
                 if(len > 0) {
+                   std::cout << "So reloading theme"<< std::endl;
+                    cysboard.destroy();
                     cysboard.load(aux::utf2w(themeFile.c_str()));
+                    // reconfigure theme
                     cysboard.configure();
                 };
             }

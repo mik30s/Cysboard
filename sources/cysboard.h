@@ -15,8 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-
-
 /**
  *  This is the central class of the program. It sets up the
  *  Document Object Model throught the Sciter Engine and sets references
@@ -86,11 +84,7 @@ public:
 
     bool configure();
     void update();
-
-    CpuObject*    getCpuInfo();
-    MemoryObject* getRamInfo();
-    OsObject*     getOsInfo();
-    DiskObject*   getDiskInfo();
+    void destroy();
 };
 
 
@@ -114,11 +108,6 @@ CysBoard::CysBoard() :
     }
 
     m_callProgram = std::make_unique<CallProgram>();
-
-    m_cpuInfo->initialize();
-    m_ramInfo->initialize();
-    m_diskInfo->initialize();
-    m_osInfo->initialize();
 }
 
 
@@ -135,9 +124,15 @@ CysBoard::~CysBoard(){}
  */
 bool CysBoard::configure() {
     bool retVal = true;
+
+    m_cpuInfo->initialize();
+    m_ramInfo->initialize();
+    m_diskInfo->initialize();
+    m_osInfo->initialize();
+
     // First initialize references to the DOM
     using namespace sciter;
-    dom::element m_root = dom::element::root_element(sciter::gview(this->get_hwnd()));
+    m_root = dom::element::root_element(sciter::gview(this->get_hwnd()));
     // tags for values
     // ram
     m_memFree = m_root.find_first("#mem_free");
@@ -160,8 +155,8 @@ bool CysBoard::configure() {
     findAllElements(m_root, "[id^=exec_]", m_execNodes);
 
     // meta tags for other config
-    dom::element windowPositionX = m_root.find_first("meta[name=position_x]");
-    dom::element windowPositionY = m_root.find_first("meta[name=position_y]");
+    dom::element&& windowPositionX = m_root.find_first("meta[name=position_x]");
+    dom::element&& windowPositionY = m_root.find_first("meta[name=position_y]");
 
     // set window position
     if(windowPositionX.is_valid() && windowPositionY.is_valid()) {
@@ -178,8 +173,8 @@ bool CysBoard::configure() {
     } else retVal = false;
 
     // set window width and height
-    dom::element windowWidth = m_root.find_first("meta[name=width]");
-    dom::element windowHeight = m_root.find_first("meta[name=height]");
+    dom::element&& windowWidth = m_root.find_first("meta[name=width]");
+    dom::element&& windowHeight = m_root.find_first("meta[name=height]");
 
     if(windowWidth.is_valid() && windowHeight.is_valid()){
         uint width, height;
@@ -195,14 +190,11 @@ bool CysBoard::configure() {
     }else retVal = false;
 
     // set update interval
-    dom::element updateInterval = m_root.find_first("meta[name=time]");
+    dom::element&& updateInterval = m_root.find_first("meta[name=time]");
     DOM_TEXT_TO_NUM(updateInterval.get_attribute("content"), m_updateInterval);
     if(m_updateInterval < 0.1) {
         m_updateInterval = 0.1;
     }
-
-    // info sources that have options
-//    DOM_TEXT_TO_STR(m_exec.get_attribute("cmd"), )
 
     return retVal;
 }
@@ -252,40 +244,34 @@ void CysBoard::update() {
     // network values
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
-        string2DomText(CallProgram::execute(
-                           DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))),
-                            node);
+        string2DomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
     }
 
     usleep(m_updateInterval * 1000000);
 }
 
 
-///**
-// * @brief Gets cpu information object
-// * @return A pointer to a CpuInformation Object
-// */
-//CpuObject* CysBoard::getCpuInfo(){ return m_cpuInfo; }
-
-
-///**
-// * @brief CysBoard::getRamInfo
-// * @return A Pointer to a RamInformation Object
-// */
-//MemoryObject* CysBoard::getRamInfo(){ return m_ramInfo; }
-
-
-///**
-// * @brief CysBoard::getOsInfo
-// * @return A pointer to an OsInformation Object
-// */
-//OsObject* CysBoard::getOsInfo(){ return m_osInfo; }
-
-
-///**
-// * @brief CysBoard::getDiskInfo
-// * @return A pointer to a DiskInformation Object
-// */
-//DiskObject* CysBoard::getDiskInfo(){ return m_diskInfo; }
+/**
+ * @brief CysBoard::destroy
+ */
+void CysBoard::destroy(){
+    m_root.destroy();
+    // tags for values
+    // ram
+    m_memFree.destroy();
+    m_memUsed.destroy();
+    //m_memTotalSwap.destroy();
+    //m_memTotal.destroy();
+    // cpu
+    m_cpuName.destroy();
+    m_cpuUsage.destroy();
+    m_cpuArchitecture.destroy();
+    m_cpuVendor.destroy();
+    //m_cpuNumOfCores.destroy();
+    // os
+    m_osName.destroy();
+    m_osDistroName.destroy();
+    m_osUptime.destroy();
+}
 
 #endif // CYSBOARD_H

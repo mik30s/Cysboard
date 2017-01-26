@@ -21,7 +21,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 /**
  * @brief A warpper around cpuid instruction for intel based cpus
  *
- * I only defined this because __get_cpuid() provided by GCC for some reason
+ * Defined this because __get_cpuid() provided by GCC for some reason
  * returned the vendor name as model name on my machine. I was not sure why.
  */
 

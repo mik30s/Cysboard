@@ -26,7 +26,7 @@ class OsObject : public IInfoObject
 {
 
 private:
-    OSInformation* m_osInfo;
+    std::unique_ptr<OSInformation> m_osInfo;
 
 public:
     OsObject();

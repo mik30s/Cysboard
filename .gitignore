@@ -5,7 +5,7 @@ release/
 *.user
 .qmake.stash
 build
-cysboard.cbp
+Cysboard.cbp
 CMakeCache.txt
 CMakeFiles
 CMakeScripts

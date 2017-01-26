@@ -111,23 +111,23 @@ std::string OSInformation::getDistroVersion(){
 std::string OSInformation::getUptime(UPTIME_FORMAT format = UPTIME_FORMAT::FULL) {
     std::stringstream sstream;
     std::string retValue;
+    retValue.reserve(128);
     unsigned long long seconds= 0, mins = 0, hrs = 0, days = 0;
-    char line[20];
 
     if(m_fpUptime != nullptr) {
         fseek(m_fpUptime, 0, SEEK_SET);
-        if(fgets(line, sizeof(line), m_fpUptime) != nullptr) {
-            // clear previous stream first
-            sstream.str("");
-            sstream << line;
-            sstream >> seconds;
 
-            // time conversions
+        if(fread(const_cast<char*>(retValue.data()), 1, retValue.capacity(), m_fpUptime)){
+            retValue += retValue.data();
+            sstream << retValue;
+            sstream >> seconds;
+            // convert time
             mins = std::floor(seconds / 60);
             hrs  = std::floor(mins / 60);
             days = std::floor(hrs / 24);
 
             sstream.str("");
+            sstream.clear();
             switch(format) {
                 case UPTIME_FORMAT::SECONDS:
                     sstream << seconds;
@@ -151,6 +151,7 @@ std::string OSInformation::getUptime(UPTIME_FORMAT format = UPTIME_FORMAT::FULL)
             sstream >> retValue;
         }
     }
+
     return retValue;
 }
 

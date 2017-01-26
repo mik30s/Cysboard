@@ -27,15 +27,15 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "cpuinfo.h"
 #include "cpucoreobject.h"
 
-class CpuObject : public IInfoObject{
+class CpuObject : public IInfoObject
+{
+private:
     CpuInformation* m_ptrCpuInfo;
     std::shared_ptr<spdlog::logger> m_logger;
 
 public:
     CpuObject();
     ~CpuObject();
-    CpuObject(CpuObject&);
-    CpuObject& operator=(CpuObject &);
 
     std::string m_name;
     std::string m_vendor;

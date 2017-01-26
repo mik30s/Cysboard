@@ -31,6 +31,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
     #define MEMORY_AVAILABLE  "MemAvailable"
     #define MEMORY_SWAP_TOTAL "SwapTotal"
     #define MEMORY_SWAP_FREE  "SwapFree"
+    #define MEMORY_CACHED     "Cached"
+    #define MEMORY_BUFFERS    "Buffers"
 #endif
 
 
