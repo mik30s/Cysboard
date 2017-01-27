@@ -79,7 +79,7 @@ int uimain(std::function<int()> run)
                 std::cout << "Theme changed"<< std::endl;
                 if(len > 0) {
                     std::cout << "So reloading theme"<< std::endl;
-                    cysboard.destroy();
+                    //cysboard.destroy();
                     cysboard.load(aux::utf2w(themeFile.c_str()));
                     // reconfigure theme
                     cysboard.configure();
