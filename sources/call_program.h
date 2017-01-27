@@ -20,7 +20,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "iinfoobject.h"
 
-class  CallProgram: public IInfoObject {
+class  CallProgram {
 public:
     void initialize(){}
     void update(){}

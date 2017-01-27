@@ -217,9 +217,9 @@ void CysBoard::update() {
 
         // memory values
         numToDomText(m_ramInfo->convert(m_ramInfo->m_total,
-                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotal);
+                        DOM_TEXT_TO_CSTR(m_memTotal.get_attribute("mul"))), m_memTotal);
         numToDomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
-                        DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memTotalSwap);
+                        DOM_TEXT_TO_CSTR(m_memTotalSwap.get_attribute("mul"))), m_memTotalSwap);
 
         m_isFirstRun = false;
     }
@@ -236,7 +236,7 @@ void CysBoard::update() {
     numToDomText(m_ramInfo->convert(m_ramInfo->m_free,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
     numToDomText(m_ramInfo->convert(m_ramInfo->m_used,
-                    DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memUsed);
+                    DOM_TEXT_TO_CSTR(m_memUsed.get_attribute("mul"))), m_memUsed);
 
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
