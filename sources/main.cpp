@@ -76,9 +76,9 @@ int uimain(std::function<int()> run)
         while(true) {
             if(poll(&pfd, 1, pollTimeOut) > 0) {
                 int len = read(inotifyfd, (void*)inotifyBuffer.data(), pollTimeOut);
-                std::cout << "Theme changed"<< std::endl;
+                logger->info("Theme changed");
                 if(len > 0) {
-                    std::cout << "So reloading theme"<< std::endl;
+                    logger->info("Reloading theme");
                     //cysboard.destroy();
                     cysboard.load(aux::utf2w(themeFile.c_str()));
                     // reconfigure theme

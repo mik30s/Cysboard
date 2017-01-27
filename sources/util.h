@@ -73,7 +73,7 @@ static inline uint64_t getNthNumber(const std::string& text, int pos){
  * @param destination a DOM element
  */
 template<class T>
-static inline void num2DomText(const T& source, sciter::dom::element& destination){
+static inline void numToDomText(const T& source, sciter::dom::element& destination){
     std::string&& val = std::to_string((int)std::ceil(source));
 
     if(destination.is_valid()) {
