@@ -46,6 +46,7 @@ int uimain(std::function<int()> run)
     if((homeDirectory = getenv("HOME")) == nullptr){
         homeDirectory = getpwuid(getuid())->pw_dir;
     }
+
     std::string path(homeDirectory);
     path += "/.config/cysboard/";
     std::string&& themeFile = path + "main.html";
@@ -65,8 +66,8 @@ int uimain(std::function<int()> run)
     }
     cysboard.expand();
 
-    std::thread updateThread([&]() {
-        const int pollTimeOut = 50;
+    std::thread updateThread([&]() mutable {
+        const int pollTimeOut = 150;
         std::string inotifyBuffer;
         inotifyBuffer.reserve(MISC_BUF_LEN);
         struct pollfd pfd = {inotifyfd, POLLIN, 0 };
@@ -77,7 +78,7 @@ int uimain(std::function<int()> run)
                 int len = read(inotifyfd, (void*)inotifyBuffer.data(), pollTimeOut);
                 std::cout << "Theme changed"<< std::endl;
                 if(len > 0) {
-                   std::cout << "So reloading theme"<< std::endl;
+                    std::cout << "So reloading theme"<< std::endl;
                     cysboard.destroy();
                     cysboard.load(aux::utf2w(themeFile.c_str()));
                     // reconfigure theme
