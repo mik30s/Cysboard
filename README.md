@@ -100,6 +100,11 @@ Atrribute       | Description                       | Applicable ID(s)
 mul             | Display value in MB, KB or GB     | mem_free, mem_used, mem_swap_total, mem_total
 cmd             | Path of program to execute        | exec_#
 
+##Project structure
+The source code for the project is located in the source directory.
+The header file `cysboard.h` contains the main update function for the program. 
+Objects for information from/about the cpu, os, memory and others are initialized in this class. 
+All the other files house classes for gathering information from various sources. For example cpuinfo_linux.cpp has functions for gathering cpu info on a system. The header file `util.h` holds functions for common and repetitive tasks. 
 
 ##Known Issues
 1. Program crashes sometimes when editing themes.
