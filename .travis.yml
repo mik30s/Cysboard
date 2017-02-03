@@ -13,5 +13,6 @@ dist: trusty
 compiler: gcc
 
 script:
+  - cd cysboard
   - mkdir build
   - cmake .. && make
