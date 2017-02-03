@@ -4,11 +4,11 @@ sudo: required
 
 dist: trusty
 
-addons: 
-    apt: 
-        packages: 
-        - gcc-5
-        - g++-5
+#addons: 
+#    apt: 
+#        packages: 
+#        - gcc-5
+#        - g++-5
 
 compiler: gcc
 
