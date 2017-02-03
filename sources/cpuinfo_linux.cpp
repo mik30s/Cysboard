@@ -319,10 +319,10 @@ double CpuInformation::getCacheSize(int core) {
 
 
 /**
- * @brief readCpuStats
- * @param fp
- * @param fields
- * @return
+ * @brief Reads a value from /proc/cpuinfo
+ * @param fp A file pointer to /proc/cpuinfo
+ * @param fields An array to hold the integers
+ * @return Will return 1 on success and 0 otherwise
  */
 int readCpuStats (FILE *fp, uint64_t *fields)
 {

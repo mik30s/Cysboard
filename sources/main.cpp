@@ -64,6 +64,7 @@ int uimain(std::function<int()> run)
     if(!cysboard.configure()){
         return 0;
     }
+
     cysboard.expand();
 
     std::thread updateThread([&]() mutable {

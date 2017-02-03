@@ -91,7 +91,7 @@ public:
 
 
 /**
- * @brief CysBoard::CysBoard
+ * @brief Initializess all information objects and the window
  */
 CysBoard::CysBoard() :
     window(SW_MAIN | SW_ALPHA | SW_POPUP, {0, 0, 10, 10})
@@ -216,9 +216,9 @@ void CysBoard::update() {
         stringToDomText(m_osInfo->m_distroName, m_osDistroName);
 
         // memory values
-        numToDomText(m_ramInfo->convert(m_ramInfo->m_total,
+        numToDomText(convertMemory(m_ramInfo->m_total,
                         DOM_TEXT_TO_CSTR(m_memTotal.get_attribute("mul"))), m_memTotal);
-        numToDomText(m_ramInfo->convert(m_ramInfo->m_totalSwap,
+        numToDomText(convertMemory(m_ramInfo->m_totalSwap,
                         DOM_TEXT_TO_CSTR(m_memTotalSwap.get_attribute("mul"))), m_memTotalSwap);
 
         m_isFirstRun = false;
@@ -232,6 +232,7 @@ void CysBoard::update() {
 
     // os
     stringToDomText(m_osInfo->m_uptime, m_osUptime);
+
     // mem
     numToDomText(m_ramInfo->convert(m_ramInfo->m_free,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
@@ -248,7 +249,7 @@ void CysBoard::update() {
 
 
 /**
- * @brief CysBoard::destroy
+ * @brief Destroys all nodes in the DOM tree
  */
 void CysBoard::destroy(){
     m_root.destroy();

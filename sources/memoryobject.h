@@ -48,8 +48,6 @@ public:
     uint64_t getUsed();
     double getFreePercentage();
     double getUsedPercentage();
-
-    double convert(uint64_t value, const char* modifierString);
 };
 
 #endif // MEMORYOBJECT_H
