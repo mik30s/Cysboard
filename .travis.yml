@@ -1,0 +1,25 @@
+language: cpp
+
+sudo: required
+
+dist: trusty
+
+before_install: 
+    - sudo apt-get -qq update
+    - sudo apt-get install libgtk-3-dev
+
+
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - g++-6
+            - gcc-6
+
+compiler: gcc
+
+script:
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - mkdir build
+  - cmake . && make
