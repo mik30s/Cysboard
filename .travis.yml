@@ -4,11 +4,9 @@ sudo: required
 
 dist: trusty
 
-#addons: 
-#    apt: 
-#        packages: 
-#        - gcc-5
-#        - g++-5
+before_install: 
+    - sudo apt-get -qq update
+    - sudo apt-get insall libgtk-3-dev
 
 compiler: gcc
 
