@@ -2,6 +2,8 @@ Cysboard
 =========
 A lightweight system monitor similar to conky but with html and css for themes
 
+<img src="https://travis-ci.org/mike168m/Cysboard.svg?branch=master"/>
+
 ##Usage
 1. Create a theme file called main.html in ~/.config/cysboard/ (There must be a file name 'main.html').
 2. Add your html code with any of the listed ids below in html tags for device info.
@@ -18,7 +20,10 @@ You must have cmake >= 3.1 and gcc >= 5.4 in order to compile
 
 
 ##Examples
+<div align=left>
 <img src="https://cloud.githubusercontent.com/assets/3809183/22354353/94b1d4e2-e3ea-11e6-813a-84a20845e275.gif" />
+<img src="https://cloud.githubusercontent.com/assets/3809183/22608057/621360be-ea20-11e6-971b-89bdce1599e8.png" />
+</div>
 
 Use ids like the following 
 
