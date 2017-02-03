@@ -8,6 +8,14 @@ before_install:
     - sudo apt-get -qq update
     - sudo apt-get install libgtk-3-dev
 
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - g++-5
+            - gcc-5
+
 compiler: gcc
 
 script:
