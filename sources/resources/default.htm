@@ -51,6 +51,8 @@
     }
             
     </style>
+    <!-- will add bars and graphs soon -->
+    <!-- you can create your own with the rendering engine's javascript implementation -->
    <!-- os info -->
     <div .section #osinfo>
         <div .section-header>OS</div>
@@ -64,17 +66,20 @@
         <p>model: <span #cpu_name></span></p>
         <p>vendor: <span #cpu_vendor></span></p>
         <p>arch: <span #cpu_arch></span></p>
-        <p>usage: <span #cpu_usage></span>%</p>
+        <p>total usage: <span #cpu_usage></span>%</p>
+        <p>core 1 usage: <span #cpu_usage_0></span>%</p>
+        <p>core 2 usage: <span #cpu_usage_1></span>%</p>
     </div>
     <!-- mem info -->
     <div .section #meminfo>
         <div .section-header>RAM</div>
-        <p>free: <span #mem_free mul="MB"></span></p>
-        <p>used: <span #mem_used mul="MB"></span></p>
+        <p>free: <span #mem_free mul="MB"></span>MB</p>
+        <p>used: <span #mem_used mul="MB"></span>MB</p>
     </div>
-<!--     <div .section #externalProgram>
-    	<p>IP: <span id="exec_0" cmd="./exec1.sh"></span></p>
-    </div> -->
+    <div .section #externalProgram>
+        <!-- you can replace the path with your on path to scripts -->
+    	<p>IP: <span id="exec_0" cmd="/home/mike/.config/cysboard/get_ip.sh"></span></p>
+    </div>
 </body>
 </html>
 

@@ -20,9 +20,9 @@ You must have cmake >= 3.1 and gcc >= 5.4 in order to compile
 
 
 ##Examples
-<div align=left>
-<img src="https://cloud.githubusercontent.com/assets/3809183/22354353/94b1d4e2-e3ea-11e6-813a-84a20845e275.gif" />
-<img src="https://cloud.githubusercontent.com/assets/3809183/22608057/621360be-ea20-11e6-971b-89bdce1599e8.png" />
+<div align=center>
+<img src="https://cloud.githubusercontent.com/assets/3809183/22609448/dd8ce142-ea26-11e6-845d-a6d67f8a1bd1.png" />
+<img src="https://cloud.githubusercontent.com/assets/3809183/22609058/38ead604-ea25-11e6-9781-ad25d0be30cb.png" />
 </div>
 
 Use ids like the following 
