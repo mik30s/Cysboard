@@ -234,9 +234,9 @@ void CysBoard::update() {
     stringToDomText(m_osInfo->m_uptime, m_osUptime);
 
     // mem
-    numToDomText(m_ramInfo->convert(m_ramInfo->m_free,
+    numToDomText(convertMemory(m_ramInfo->m_free,
                     DOM_TEXT_TO_CSTR(m_memFree.get_attribute("mul"))), m_memFree);
-    numToDomText(m_ramInfo->convert(m_ramInfo->m_used,
+    numToDomText(convertMemory(m_ramInfo->m_used,
                     DOM_TEXT_TO_CSTR(m_memUsed.get_attribute("mul"))), m_memUsed);
 
     // execute commands and output result on each update
