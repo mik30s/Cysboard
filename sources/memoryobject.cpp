@@ -111,26 +111,3 @@ double MemoryObject::getUsedPercentage(){
     return m_usedPercentage;
 }
 
-/**
- * @brief Converts the value using the specified multiplier
- * @param value the value to convert
- * @param multiplier MB, KB or GB
- * @return
- */
-double MemoryObject::convert(uint64_t value, const char* multiplier){
-    double retVal =  0;
-    const uint64_t MEGABYTE = 1048576;
-    const uint64_t KILOBYTE = 1024;
-
-    if(std::strncmp("KB", multiplier, 2) == 0){
-        return value;
-    }
-    if(std::strncmp("MB", multiplier, 2) == 0){
-        retVal = (double) value / KILOBYTE;
-    }
-    if(std::strncmp("GB", multiplier, 2) == 0){
-        retVal = (double) value / MEGABYTE;
-    }
-
-    return std::floor(retVal * 100) / 100;
-}

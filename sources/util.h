@@ -52,8 +52,8 @@ struct pipeDeleter {
 
 /**
  * @brief Uses regexp to get the integer value of the Nth number in a string
- * @param text
- * @param pos
+ * @param text A reference to a std::string
+ * @param pos  Which position to look at
  * @return
  */
 static inline uint64_t getNthNumber(const std::string& text, int pos){
@@ -115,8 +115,10 @@ static inline void stringToDomText(const std::string& source, sciter::dom::eleme
  * @param nodes a vector to hold the nodes found
  * @param overwrite Replace all elements in the vector
  */
-static void findAllElements(sciter::dom::element& root, const char* selector,
-                            std::vector<sciter::dom::element>& nodes, bool overwrite = true)
+static void findAllElements(sciter::dom::element& root,
+                            const char* selector,
+                            std::vector<sciter::dom::element>& nodes,
+                            bool overwrite = true)
 {
     // clear out previous contents
     if(overwrite){
@@ -136,6 +138,31 @@ static void findAllElements(sciter::dom::element& root, const char* selector,
     NodeCounter counter(nodes);
     root.find_all(&counter, selector);
 }
+
+/**
+ * @brief Converts the value using the specified multiplier
+ * @param value the value to convert
+ * @param multiplier MB, KB or GB
+ * @return
+ */
+static double convertMemory(uint64_t value, const char* multiplier){
+    double retVal =  0;
+    const uint64_t MEGABYTE = 1048576;
+    const uint64_t KILOBYTE = 1024;
+
+    if(std::strncmp("KB", multiplier, 2) == 0){
+        return value;
+    }
+    if(std::strncmp("MB", multiplier, 2) == 0){
+        retVal = (double) value / KILOBYTE;
+    }
+    if(std::strncmp("GB", multiplier, 2) == 0){
+        retVal = (double) value / MEGABYTE;
+    }
+
+    return std::floor(retVal * 100) / 100;
+}
+
 
 #define DOM_TEXT_TO_NUM(source, destination) \
             destination = aux::wtoi(source.c_str()) \

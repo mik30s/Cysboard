@@ -25,15 +25,15 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 std::map<const char*, const char*>
 OSInformation::alternateFieldValues = {
-    {"DISTRIB_ID",          "NAME"},
-    {"DISTRIB_RELEASE",     "VERSION_ID"},
-    {"DISTRIB_CODENAME",    "VERSION"},
-    {"DISTRIB_DESCRIPTION", "PRETTY_NAME"}
+    {LSB_RELEASE_DISTRO_NAME,   "NAME"},
+    {LSB_RELEASE_NUMBER,        "VERSION_ID"},
+    {LSB_RELEASE_CODE_NAME,     "VERSION"},
+    {LSB_RELEASE_DESCRIPTION,   "PRETTY_NAME"}
 };
 
 /**
- * @brief OSInformation::OSInformation
- *
+ * @brief Creats an OsInformation object
+ *        Also opens files for various information sources
  */
 OSInformation::OSInformation(){
     m_logger = spdlog::get("logger");
@@ -45,9 +45,15 @@ OSInformation::OSInformation(){
     m_fpOsRelease = fopen("/etc/os-release", "r");
     m_fpUptime = fopen("/proc/uptime","r");
 
-    if(m_fpLsbRelease == nullptr && m_fpOsRelease == nullptr) {
+    if(m_fpLsbRelease == nullptr && m_fpOsRelease != nullptr){
+        m_fpLsbRelease = m_fpOsRelease;
+    }
+    else if(m_fpLsbRelease != nullptr && m_fpOsRelease == nullptr){
+        m_fpOsRelease = m_fpLsbRelease;
+    }
+    else if(m_fpLsbRelease == nullptr && m_fpOsRelease == nullptr) {
         throw std::runtime_error(std::string(__FUNCTION__) +
-                                 "Failed to open /etc/lsb-release" \
+                                 " Failed to open /etc/lsb-release" \
                                  " and /etc/os-release");
     }
 
