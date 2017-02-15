@@ -252,23 +252,26 @@ void CysBoard::update() {
  * @brief Destroys all nodes in the DOM tree
  */
 void CysBoard::destroy(){
-    m_root.destroy();
+
     // tags for values
     // ram
-    m_memFree.destroy();
-    m_memUsed.destroy();
-    //m_memTotalSwap.destroy();
-    //m_memTotal.destroy();
+    destroyDomNode(m_memFree);
+    destroyDomNode(m_memUsed);
+    destroyDomNode(m_memTotalSwap);
+    destroyDomNode(m_memTotal);
     // cpu
-    m_cpuName.destroy();
-    m_cpuUsage.destroy();
-    m_cpuArchitecture.destroy();
-    m_cpuVendor.destroy();
-    //m_cpuNumOfCores.destroy();
+    destroyDomNode(m_cpuName);
+    destroyDomNode(m_cpuUsage);
+    destroyDomNode(m_cpuArchitecture);
+    destroyDomNode(m_cpuVendor);
+    destroyDomNode(m_cpuNumOfCores);
     // os
-    m_osName.destroy();
-    m_osDistroName.destroy();
-    m_osUptime.destroy();
+    destroyDomNode(m_osName);
+    destroyDomNode(m_osDistroName);
+    destroyDomNode(m_osUptime);
+    // root
+    destroyDomNode(m_root);
 }
+
 
 #endif // CYSBOARD_H

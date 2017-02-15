@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#ifndef CPUOBJECT_H
-#define CPUOBJECT_H
+#ifndef CYSBOARD_CPUOBJECT_H
+#define CYSBOARD_CPUOBJECT_H
 
 #include <memory>
 #include <spdlog/spdlog.h>
@@ -56,4 +56,4 @@ public:
     void update();
 };
 
-#endif // CPUOBJECT_H
+#endif // CYSBOARD_CPUOBJECT_H
