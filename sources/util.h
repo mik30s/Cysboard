@@ -18,8 +18,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 // MACROs and functions for handling common or repetitive tasks
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef CYSBOARD_UTIL_H
+#define CYSBOARD_UTIL_H
 
 #include <sciter/sciter-x-window.hpp>
 #include <experimental/string_view>
@@ -81,6 +81,16 @@ static inline void numToDomText(const T& source, sciter::dom::element& destinati
     }
 }
 
+
+/**
+ * @brief Safely destroys a DOM node.
+ * @param A sciter DOM node
+ */
+static inline void destroyDomNode(sciter::dom::element& node){
+    if(node.is_valid()){
+        node.destroy();
+    }
+}
 
 /**
  * @brief Converts a numeric type to and sciter DOM text

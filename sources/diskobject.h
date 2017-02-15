@@ -17,8 +17,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
 
-#ifndef DISKOBJECT_H
-#define DISKOBJECT_H
+#ifndef CYSBOARD_DISKOBJECT_H
+#define CYSBOARD_DISKOBJECT_H
 
 #include <memory>
 #include "iinfoobject.h"
@@ -41,4 +41,4 @@ public:
     void getUsedSpace(const char* disk);
 };
 
-#endif // DISKOBJECT_H
+#endif // CYSBOARD_DISKOBJECT_H
