@@ -20,14 +20,16 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "iinfoobject.h"
 
-class  CallProgram {
+#define OUT_BUF_SIZE 512
+
+class CallProgram {
 public:
     void initialize(){}
     void update(){}
 
     static std::string execute(const char* command) {
         std::string output("");
-        output.reserve(128);
+        output.reserve(OUT_BUF_SIZE);
 
         struct pipeDeleter {
             void operator()(FILE* ptr) const noexcept{
