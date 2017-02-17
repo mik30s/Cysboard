@@ -41,9 +41,9 @@ Use ids like the following
 <body>
     <div
        <!-- os info -->
-        <div .section #osinfo>
+        <div class="section" #osinfo>
             <div >SYSTEM</div>
-            <div .section-content-child>
+            <div class="section-content-child">
                 <p>name:   <span id="os_name"></span></p>
                 <p>distro: <span id="os_distro_name"></span></p>
                 <p>uptime: <span id="os_uptime"></span></p>
@@ -71,7 +71,7 @@ Use ids like the following
 </body>
 </html>
 ```
-See sources/resources/default.html for a working theme.
+Please see sources/resources/default.html for a working theme. 
 
 ##IDs
 A list of currently supported information from sources. Add any of
@@ -97,7 +97,7 @@ cpu_usage_#    | Get a cpu core's usage percentage eg. *cpu_usage_0, cpu_usage_1
 Some IDs require attributes and can be used like this
 
 ```html
-	<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
+<p>Free RAM: <span id="mem_free" mul="MB"></span></p>
 ```
 
 Atrribute       | Description                       | Applicable ID(s)
@@ -108,8 +108,8 @@ cmd             | Path of program to execute        | exec_#
 ##Project structure
 The source code for the project is located in the source directory.
 The header file `cysboard.h` contains the main update function for the program. 
-Objects for information from/about the cpu, os, memory and others are initialized in this class. 
-All the other files house classes for gathering information from various sources. For example cpuinfo_linux.cpp has functions for gathering cpu info on a system. The header file `util.h` holds functions for common and repetitive tasks. 
+Objects for information from or about the cpu, os, memory and others are initialized in this class. 
+All the other files house classes for gathering information from various sources. For example `cpuinfo_linux.cpp` has functions for gathering cpu info on a system. The header file `util.h` holds functions for common and repetitive tasks. 
 
 ##Known Issues
 1. Program crashes sometimes when editing themes.

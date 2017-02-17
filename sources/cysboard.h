@@ -148,6 +148,7 @@ bool CysBoard::configure() {
     m_osDistroName = m_root.find_first("#os_distro_name");
     m_osUptime = m_root.find_first("#os_uptime");
     // disk
+    findAllElements(m_root, "[id^=disk_]", m_execNodes);
     // networking
     // other
     findAllElements(m_root, "[id^=exec_]", m_execNodes);
@@ -239,6 +240,8 @@ void CysBoard::update() {
     numToDomText(convertMemory(m_ramInfo->m_used,
                     DOM_TEXT_TO_CSTR(m_memUsed.get_attribute("mul"))), m_memUsed);
 
+    //
+
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
         stringToDomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
@@ -252,8 +255,6 @@ void CysBoard::update() {
  * @brief Destroys all nodes in the DOM tree
  */
 void CysBoard::destroy(){
-
-    // tags for values
     // ram
     destroyDomNode(m_memFree);
     destroyDomNode(m_memUsed);
