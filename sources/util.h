@@ -17,9 +17,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
 // MACROs and functions for handling common or repetitive tasks
-
-#ifndef CYSBOARD_UTIL_H
-#define CYSBOARD_UTIL_H
+#pragma once
 
 #include <sciter/sciter-x-window.hpp>
 #include <experimental/string_view>
@@ -184,5 +182,3 @@ static double convertMemory(uint64_t value, const char* multiplier){
             aux::w2utf(source.c_str()).c_str()\
 
 
-
-#endif // UTIL_H

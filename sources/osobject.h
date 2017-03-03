@@ -16,8 +16,7 @@ You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
-#ifndef CYSBOARD_OSOBJECT_H
-#define CYSBOARD_OSOBJECT_H
+#pragma once
 
 #include "osinfo.h"
 #include "iinfoobject.h"
@@ -49,4 +48,3 @@ public:
 
 };
 
-#endif // CYSBOARD_OSOBJECT_H

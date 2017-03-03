@@ -16,8 +16,7 @@ You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
-#ifndef CYSBOARD_OSINFO_H
-#define CYSBOARD_OSINFO_H
+#pragma once
 
 #include <iostream>
 #include <cstdio>
@@ -79,5 +78,3 @@ public:
     std::string getUptime(UPTIME_FORMAT);
 
 };
-
-#endif // CYSBOARD_OSINFO_H

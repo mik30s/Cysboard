@@ -15,8 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#ifndef CYSBOARD_CPUOBJECT_H
-#define CYSBOARD_CPUOBJECT_H
+#pragma once
 
 #include <memory>
 #include <spdlog/spdlog.h>
@@ -56,4 +55,3 @@ public:
     void update();
 };
 
-#endif // CYSBOARD_CPUOBJECT_H

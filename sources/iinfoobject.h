@@ -15,10 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-
-
-#ifndef IINFOOBJECT_H
-#define IINFOOBJECT_H
+#pragma once
 
 class IInfoObject
 {
@@ -26,5 +23,3 @@ public:
     virtual void initialize() = 0;
     virtual void update() = 0;
 };
-
-#endif // IINFOOBJECT_H

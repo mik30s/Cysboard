@@ -15,9 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-
-#ifndef LINUXUTIL_H
-#define LINUXUTIL_H
+#pragma once
 
 #include <unistd.h>
 #include <stdint.h>
@@ -28,4 +26,3 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
 
-#endif // LINUXUTIL_H

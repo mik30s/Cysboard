@@ -14,10 +14,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
-
-
-#ifndef CYSBOARD_DISKINFO_H
-#define CYSBOARD_DISKINFO_H
+#pragma once
 
 // TODO: DONT forget to clean up unnecessary headers
 #include <unistd.h>
@@ -65,4 +62,3 @@ public:
     uint64_t getFreeDiskSize(const char* diskName);
 };
 
-#endif // CYSBOARD_DISKINFO_H

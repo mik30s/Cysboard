@@ -21,8 +21,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
  *  to DOM nodes for values to be diplayed.
  */
 
-#ifndef CYSBOARD_H
-#define CYSBOARD_H
+#pragma once
 
 #include "cpuobject.h"
 #include "osobject.h"
@@ -275,4 +274,3 @@ void CysBoard::destroy(){
 }
 
 
-#endif // CYSBOARD_H

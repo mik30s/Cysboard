@@ -15,9 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-
-#ifndef CYSBOARD_MEMINFO_H
-#define CYSBOARD_MEMINFO_H
+#pragma once
 
 #include <iostream>
 #include <sstream>
@@ -66,4 +64,3 @@ public:
 
 };
 
-#endif // CYSBOARD_MEMINFO_H
