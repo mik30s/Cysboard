@@ -16,8 +16,7 @@ You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
-#ifndef CYSBOARD_MEMORYOBJECT_H
-#define CYSBOARD_MEMORYOBJECT_H
+#pragma once
 
 #include "iinfoobject.h"
 #include <spdlog/spdlog.h>
@@ -50,4 +49,3 @@ public:
     double getUsedPercentage();
 };
 
-#endif // CYSBOARD_MEMORYOBJECT_H

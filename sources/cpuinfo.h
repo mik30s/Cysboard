@@ -16,8 +16,7 @@ You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 
-#ifndef CYSBOARD_CPUINFO_H
-#define CYSBOARD_CPUINFO_H
+#pragma once
 
 #include <exception>
 #include "ccpuid.h"        // a wrapper around cpuid for cpu information
@@ -95,6 +94,4 @@ public:
     double getCurrentSpeed(int core);
     double getCacheSize(int core);
 };
-
-#endif // CYSBOARD_CPUINFO_H
 

@@ -15,8 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#ifndef CYSBOARD_CCPUID_H
-#define CYSBOARD_CCPUID_H
+#pragma once
 
 /**
  * @brief A warpper around cpuid instruction for intel based cpus
@@ -74,4 +73,3 @@ public:
     const uint32_t& getEDX() const {return registers[3];}
 };
 
-#endif // CCPUID_H
