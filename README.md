@@ -4,7 +4,7 @@ A lightweight system monitor similar to conky but with html and css for themes
 
 <img src="https://travis-ci.org/mike168m/Cysboard.svg?branch=master"/>
 
-##Usage
+##Usage##
 1. Create a theme file called main.html in ~/.config/cysboard/ (There must be a file name 'main.html').
 2. Add your html code with any of the listed ids below in html tags for device info.
 3. Run cysboard.
