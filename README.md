@@ -23,6 +23,7 @@ You must have cmake >= 3.1 and gcc >= 5.4 in order to compile
 <div align=center>
 <img src="https://cloud.githubusercontent.com/assets/3809183/22609448/dd8ce142-ea26-11e6-845d-a6d67f8a1bd1.png" />
 <img src="https://cloud.githubusercontent.com/assets/3809183/22609058/38ead604-ea25-11e6-9781-ad25d0be30cb.png" />
+<img src="https://cloud.githubusercontent.com/assets/1056963/25584994/b8e532f2-2e98-11e7-84ea-95e760a1acb4.png" />
 </div>
 
 Use ids like the following 
@@ -66,6 +67,11 @@ Use ids like the following
         <div>
             <p>Program 1 Output: <span id="exec_1" cmd="path/to/program"></span></p>
             <p>Program 2 Output: <span id="exec_2" cmd="path/to/program"></span></p>	    	
+        </div>
+        <!-- album art and other stuff -->
+        <!-- you can change the img src tag with shell scripts like this -->
+        <div>
+            <img class="album-pic" id="exec_3" cmd="/home/melchor9000/.config/cysboard/dbus.sh 4">
         </div>
     </div>
 </body>
