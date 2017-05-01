@@ -117,6 +117,19 @@ static inline void stringToDomText(const std::string& source, sciter::dom::eleme
 
 
 /**
+ * @brief Converts a std::string to be set as an attribute on a DOM element
+ * @param source The value of the parameter
+ * @param destination The DOM element
+ * @param attr The attribute name to set
+ */
+static inline void stringToDomAttr(const std::string& source, sciter::dom::element& destination, const std::string& attr) {
+    if(destination.is_valid()) {
+        destination.set_attribute(attr.c_str(), (const WCHAR*) aux::utf2w(source));
+    }
+}
+
+
+/**
  * @brief find all the elements in the DOM with the selector
  * @param root The root DOM element
  * @param selector CSS selector for the nodes

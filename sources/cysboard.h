@@ -243,7 +243,11 @@ void CysBoard::update() {
 
     // execute commands and output result on each update
     for(auto& node: m_execNodes) {
-        stringToDomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
+        if(node.get_element_type() == "img") {
+            stringToDomAttr(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node, "src");
+        } else {
+            stringToDomText(CallProgram::execute(DOM_TEXT_TO_CSTR(node.get_attribute("cmd"))), node);
+        }
     }
 
     usleep(m_updateInterval * 1000000);
