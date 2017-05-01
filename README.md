@@ -68,6 +68,11 @@ Use ids like the following
             <p>Program 1 Output: <span id="exec_1" cmd="path/to/program"></span></p>
             <p>Program 2 Output: <span id="exec_2" cmd="path/to/program"></span></p>	    	
         </div>
+        <!-- album art and other stuff -->
+        <!-- you can change the img src tag with shell scripts like this -->
+        <div>
+            <img class="album-pic" id="exec_3" cmd="/home/melchor9000/.config/cysboard/dbus.sh 4">
+        </div>
     </div>
 </body>
 </html>
