@@ -122,4 +122,5 @@ All the other files house classes for gathering information from various sources
 
 ## Todo
 1. GPU, Disk and Network information.
-2. Run commands from theme file.
+2. Add graph and bar controls like conky. 
+3. Run commands from theme file.
