@@ -73,6 +73,7 @@ private:
     sciter::dom::element m_osName;
     sciter::dom::element m_osDistroName;
     sciter::dom::element m_osUptime;
+    sciter::dom::element m_osProcNum;
 
     std::vector<sciter::dom::element> m_execNodes;
 
@@ -100,7 +101,7 @@ CysBoard::CysBoard() :
     // initialize all objects
     try {
         m_cpuInfo  = std::make_unique<CpuObject>();
-        m_diskInfo = std::make_unique<DiskObject>();
+//        m_diskInfo = std::make_unique<DiskObject>();
         m_osInfo   = std::make_unique<OsObject>();
         m_ramInfo  = std::make_unique<MemoryObject>();
     }
@@ -123,7 +124,7 @@ bool CysBoard::configure() {
 
     m_cpuInfo->initialize();
     m_ramInfo->initialize();
-    m_diskInfo->initialize();
+//    m_diskInfo->initialize();
     m_osInfo->initialize();
 
     // First initialize references to the DOM
@@ -146,6 +147,7 @@ bool CysBoard::configure() {
     m_osName  = m_root.find_first("#os_name");
     m_osDistroName = m_root.find_first("#os_distro_name");
     m_osUptime = m_root.find_first("#os_uptime");
+    m_osProcNum = m_root.find_first("#os_num_procs");
     // disk
     findAllElements(m_root, "[id^=disk_]", m_execNodes);
     // networking
@@ -185,7 +187,7 @@ bool CysBoard::configure() {
     // set update interval
     dom::element&& updateInterval = m_root.find_first("meta[name=time]");
     DOM_TEXT_TO_NUM(updateInterval.get_attribute("content"), m_updateInterval);
-    if(m_updateInterval < 0.1) {
+    if (m_updateInterval < 0.1) {
         m_updateInterval = 0.1;
     }
 
@@ -202,7 +204,7 @@ bool CysBoard::configure() {
 void CysBoard::update() {
     m_cpuInfo->update();
     m_ramInfo->update();
-    m_diskInfo->update();
+//    m_diskInfo->update();
     m_osInfo->update();
 
     if(m_isFirstRun){
@@ -232,6 +234,7 @@ void CysBoard::update() {
 
     // os
     stringToDomText(m_osInfo->m_uptime, m_osUptime);
+    stringToDomText(m_osInfo->m_numberOfProcess, m_osProcNum);
 
     // mem
     numToDomText(convertMemory(m_ramInfo->m_free,

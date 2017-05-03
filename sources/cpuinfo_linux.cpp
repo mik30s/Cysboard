@@ -56,7 +56,7 @@ CpuInformation::CpuInformation()
     m_fpStats = fopen("/proc/stat", "r");
 
     if(m_fpStats == nullptr)
-        throw std::runtime_error(std::string(__FUNCTION__) + "Failed to open /proc/stats");
+        throw std::runtime_error(std::string(__FUNCTION__) + "Failed to open /proc/stat");
 
     // capture the first tick values
     int i, cpus = 0;

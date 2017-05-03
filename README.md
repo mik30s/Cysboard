@@ -97,6 +97,7 @@ mem_total      | The total amount of physical memory available
 os_name        | The name of the OS        
 os_distro_name | The distribution name (*Linux only*)       
 os_uptime      | The total amount of time since last boot
+os_num_procs    | The number of running processes
 exec_#         | Execute a program and display its output eg. *exec_0, exec_1* etc.
 cpu_usage_#    | Get a cpu core's usage percentage eg. *cpu_usage_0, cpu_usage_1* etc.
 

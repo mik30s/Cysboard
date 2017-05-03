@@ -99,4 +99,5 @@ std::string OsObject::getDistroName() {
  */
 void OsObject::update() {
     m_uptime = m_osInfo->getUptime(OSInformation::UPTIME_FORMAT::FULL);
+    m_numberOfProcess = m_osInfo->getNumberOfProcesses();
 }
