@@ -44,6 +44,7 @@ OSInformation::OSInformation(){
     m_fpLsbRelease = fopen("/etc/lsb-release","r");
     m_fpOsRelease = fopen("/etc/os-release", "r");
     m_fpUptime = fopen("/proc/uptime","r");
+    m_procDir = opendir("/proc");
 
     if(m_fpLsbRelease == nullptr && m_fpOsRelease != nullptr){
         m_fpLsbRelease = m_fpOsRelease;
@@ -161,6 +162,26 @@ std::string OSInformation::getUptime(UPTIME_FORMAT format = UPTIME_FORMAT::FULL)
     return retValue;
 }
 
+std::string OSInformation::getNumberOfProcesses(){
+    unsigned long number = 0;
+    if (m_procDir != nullptr) {
+        // count number of subdirs that have only numbers in their name,
+        std::regex regex("[[:digit:]]+");
+        auto nextDir = readdir(m_procDir);
+
+        while (nextDir != nullptr) {
+            if (std::regex_match(nextDir->d_name, regex)) {
+                number++;
+            }
+            nextDir = readdir(m_procDir);
+        }
+    }
+    // rewind when done
+    rewinddir(m_procDir);
+
+    return std::to_string(number);
+}
+
 
 /**
  * @brief readReleaseInfoField
@@ -189,6 +210,7 @@ std::string OSInformation::readReleaseInfoField(FILE* fp, const char* fieldName)
 
     return value;
 }
+
 
 
 /**

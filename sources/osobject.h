@@ -39,11 +39,13 @@ public:
     std::string  m_version;
     std::string  m_distroName;
     std::string  m_uptime;
+    std::string  m_numberOfProcess;
 
     std::string  getName();
     std::string  getVendor();
     std::string  getVersion();
     std::string  getUptime();
+    std::string  getNumberOfProcess();
     std::string  getDistroName();
 
 };

@@ -51,6 +51,7 @@ private:
     FILE* m_fpLsbRelease;
     FILE* m_fpOsRelease;
     FILE* m_fpUptime;
+    DIR* m_procDir;
 
     static std::map<const char*, const char*> alternateFieldValues;
 
@@ -75,6 +76,7 @@ public:
     std::string getVersion();
     std::string getDistroName();
     std::string getDistroVersion();
+    std::string getNumberOfProcesses();
     std::string getUptime(UPTIME_FORMAT);
 
 };
