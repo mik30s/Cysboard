@@ -40,13 +40,34 @@ public:
     std::string  m_distroName;
     std::string  m_uptime;
     std::string  m_numberOfProcess;
-
-    std::string  getName();
-    std::string  getVendor();
-    std::string  getVersion();
-    std::string  getUptime();
-    std::string  getNumberOfProcess();
-    std::string  getDistroName();
-
 };
 
+/**
+ * @brief OsObject::OsObject
+ */
+OsObject::OsObject(){
+    try{
+        m_osInfo = std::make_unique<OSInformation>();
+    }
+    catch(std::exception &ex){ throw; }
+}
+
+
+/**
+ * @brief OsObject::initialize
+ */
+void OsObject::initialize() {
+    m_name = m_osInfo->getName();
+    m_version = m_osInfo->getVersion();
+#ifdef __linux__
+    m_distroName = m_osInfo->getDistroName();
+#endif
+}
+
+/**
+ * @brief OsObject::update
+ */
+void OsObject::update() {
+    m_uptime = m_osInfo->getUptime(OSInformation::UPTIME_FORMAT::FULL);
+    m_numberOfProcess = m_osInfo->getNumberOfProcesses();
+}

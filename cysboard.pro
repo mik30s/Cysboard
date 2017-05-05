@@ -14,7 +14,6 @@ SOURCES += sources/cpucoreobject.cpp \
            sources/cpuobject.cpp \
            sources/diskobject.cpp \
            sources/memoryobject.cpp \
-           sources/osobject.cpp \
 
 unix:SOURCES += sources/cpuinfo_linux.cpp \
                 sources/osinfo_linux.cpp \
