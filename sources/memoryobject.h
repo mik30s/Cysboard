@@ -18,7 +18,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #pragma once
 
-#include "iinfoobject.h"
 #include <spdlog/spdlog.h>
 #include "meminfo.h"
 

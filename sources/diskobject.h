@@ -18,7 +18,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #pragma once
 
 #include <memory>
-#include "iinfoobject.h"
 #include "diskinfo.h"
 
 class DiskObject

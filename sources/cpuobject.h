@@ -20,7 +20,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <string>
-#include "iinfoobject.h"
 #include "cpuinfo.h"
 #include "cpucoreobject.h"
 
