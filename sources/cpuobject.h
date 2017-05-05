@@ -54,10 +54,6 @@ public:
     void update();
 };
 
-// simple float rounding macro
-#define ROUND(value)\
-    std::floor(value * 10 + 0.5) / 10;\
-
 
 /**
  * @brief CpuObject::CpuObject
@@ -110,7 +106,7 @@ void CpuObject::update(){
         m_ptrCores[i]->m_currentSpeed = std::ceil(m_ptrCpuInfo->getCurrentSpeed(core));
     }
 
-    m_totalUsagePercent = ROUND(m_ptrCpuInfo->getTotalUsagePercentage());
+    m_totalUsagePercent = round(m_ptrCpuInfo->getTotalUsagePercentage());
 }
 
 
