@@ -39,6 +39,15 @@ struct NodeTextUpdater{
 };
 
 /**
+ * @brief round rounds a value to one decimal place.
+ * @param value a float value
+ * @return rounded value
+ */
+inline double round(double value){
+   return std::floor(value * 10 + 0.5) / 10;
+}
+
+/**
  * @brief pipeDeleter struct
  * Closes a file stream
  */

@@ -17,20 +17,14 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #pragma once
 
-#include "iinfoobject.h"
-
 class CpuCoreObject
 {
 public:
-    CpuCoreObject();
-    ~CpuCoreObject();
+    CpuCoreObject() = default;
+    ~CpuCoreObject() = default;
 
     double m_currentSpeed;
     int m_cacheSize;
     double m_usePercentage;
-
-    int getCurrentSpeed();
-    int getCacheSize();
-    double getUsePercentage();
 };
 

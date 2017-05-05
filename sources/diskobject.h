@@ -18,7 +18,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #pragma once
 
 #include <memory>
-#include "iinfoobject.h"
 #include "diskinfo.h"
 
 class DiskObject
@@ -38,3 +37,31 @@ public:
     void getUsedSpace(const char* disk);
 };
 
+/**
+ * @brief DiskObject::DiskObject
+ */
+DiskObject::DiskObject() {
+    try {
+        m_ptrDiskInfo = std::make_unique<DiskInformation>();
+    }
+    catch(std::exception &e) {
+        throw;
+    }
+}
+
+
+/**
+ * @brief DiskObject::initialize
+ * @return
+ */
+void DiskObject::initialize() {
+    // working on this
+}
+
+
+/**
+ * @brief DiskObject::update
+ */
+void DiskObject::update() {
+    // working on this
+}

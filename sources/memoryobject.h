@@ -18,7 +18,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #pragma once
 
-#include "iinfoobject.h"
 #include <spdlog/spdlog.h>
 #include "meminfo.h"
 
@@ -41,11 +40,45 @@ public:
     uint64_t m_free, m_used;
     double m_freePercentage;
     double m_usedPercentage;
-
-    uint64_t getTotal();
-    uint64_t getFree();
-    uint64_t getUsed();
-    double getFreePercentage();
-    double getUsedPercentage();
 };
 
+
+/**
+ * @brief MemoryObject::MemoryObject
+ */
+MemoryObject::MemoryObject(){
+    m_logger = spdlog::get("cysboardLogger");
+
+    try{
+        m_ptrMemInfo = std::make_unique<MemoryInformation>();
+    }
+    catch(std::exception& ex){
+        throw;
+    }
+}
+
+
+/**
+ * @brief MemoryObject::initialize
+ * @return
+ */
+void MemoryObject::initialize(){
+    m_total = m_ptrMemInfo->getTotalAmount();
+
+#ifdef __linux__
+    m_totalSwap = m_ptrMemInfo->getTotalSwapAmount();
+
+#endif
+    // m_logger->info("Total memory {0:d}", m_total);
+}
+
+
+/**
+ * @brief MemoryObject::update
+ */
+void MemoryObject::update(){
+    m_free = m_ptrMemInfo->getFreeAmount();
+    m_used = m_total - m_free;
+
+    return;
+}

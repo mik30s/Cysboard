@@ -9,12 +9,8 @@ PKGCONFIG += gtk+-3.0
 HEADERS += sources/*.h \
     sources/call_program.h
 
-SOURCES += sources/cpucoreobject.cpp \
+SOURCES += \
            sources/main.cpp \
-           sources/cpuobject.cpp \
-           sources/diskobject.cpp \
-           sources/memoryobject.cpp \
-           sources/osobject.cpp \
 
 unix:SOURCES += sources/cpuinfo_linux.cpp \
                 sources/osinfo_linux.cpp \

@@ -29,17 +29,12 @@ set (${HEADERS}
  )
 
  set(SOURCES
- sources/cpucoreobject.cpp
 sources/cpuinfo_linux.cpp
-sources/cpuobject.cpp
 sources/default_theme.cpp
 sources/diskinfo_linux.cpp
-sources/diskobject.cpp
 sources/linuxutil.cpp
 sources/meminfo_linux.cpp
-sources/memoryobject.cpp
 sources/osinfo_linux.cpp
-sources/osobject.cpp
 sources/main.cpp
 )
 

@@ -17,8 +17,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #pragma once
 
-#include "iinfoobject.h"
-
 #define OUT_BUF_SIZE 512
 
 class CallProgram {

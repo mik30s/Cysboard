@@ -20,7 +20,6 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <string>
-#include "iinfoobject.h"
 #include "cpuinfo.h"
 #include "cpucoreobject.h"
 
@@ -54,4 +53,104 @@ public:
     void initialize();
     void update();
 };
+
+
+/**
+ * @brief CpuObject::CpuObject
+ */
+CpuObject::CpuObject() {
+
+    m_logger = spdlog::get("cysboardLogger");
+
+    try{
+        m_ptrCpuInfo = std::make_unique<CpuInformation>();
+    }
+    catch(std::exception &e){
+        //m_logger->alert("{0:s}",e.what());
+        throw;
+    }
+}
+
+
+/**
+ * @brief CpuObject::~CpuObject
+ */
+CpuObject::~CpuObject(){
+    m_ptrCores.clear();
+}
+
+
+
+/**
+ * @brief CpuObject::initialize
+ * @return
+ */
+void CpuObject::initialize(){
+    m_name = m_ptrCpuInfo->getName();
+    m_vendor = m_ptrCpuInfo->getVendor();
+    m_architecture = m_ptrCpuInfo->getArchitecture();
+    m_numberOfCores = m_ptrCpuInfo->getNumberOfCores();
+
+    for(int core = 0; core < m_numberOfCores; core++){
+        m_ptrCores.push_back(std::move(std::make_unique<CpuCoreObject>()));
+    }
+}
+
+
+/**
+ * @brief CpuObject::update
+ */
+void CpuObject::update(){
+    for(int core = 1, i = 0; core < m_numberOfCores + 1; core++, i++){
+        m_ptrCores[i]->m_usePercentage = std::ceil(m_ptrCpuInfo->getCoreUsagePercentage(core));
+        m_ptrCores[i]->m_currentSpeed = std::ceil(m_ptrCpuInfo->getCurrentSpeed(core));
+    }
+
+    m_totalUsagePercent = round(m_ptrCpuInfo->getTotalUsagePercentage());
+}
+
+
+/**
+ * @brief CpuObject::getName
+ * @return
+ */
+std::string CpuObject::getName(){return m_name;}
+
+
+/**
+ * @brief CpuObject::getVendor
+ * @return
+ */
+std::string CpuObject::getVendor(){return m_vendor;}
+
+
+/**
+ * @brief CpuObject::getArchitecture
+ * @return
+ */
+std::string CpuObject::getArchitecture(){return m_architecture;}
+
+
+/**
+ * @brief CpuObject::getNumberOfCores
+ * @return
+ */
+int CpuObject::getNumberOfCores(){return m_numberOfCores;}
+
+
+/**
+ * @brief CpuObject::getTotalUsagePercentage
+ * @return
+ */
+double CpuObject::getTotalUsagePercentage(){return m_totalUsagePercent;}
+
+
+/**
+ * @brief CpuObject::getCores
+ * @return
+ *
+ */
+std::vector<std::unique_ptr<CpuCoreObject>>&
+CpuObject::getCores(){return m_ptrCores;}
+
 
