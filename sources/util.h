@@ -43,7 +43,7 @@ struct NodeTextUpdater{
  * @param value a float value
  * @return rounded value
  */
-static inline double round(double value){
+inline double round(double value){
    return std::floor(value * 10 + 0.5) / 10;
 }
 
