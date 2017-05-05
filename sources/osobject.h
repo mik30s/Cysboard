@@ -29,7 +29,7 @@ private:
 
 public:
     OsObject();
-    ~OsObject();
+    ~OsObject() = default;
 
     void initialize();
     void update();

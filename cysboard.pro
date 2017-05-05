@@ -12,8 +12,6 @@ HEADERS += sources/*.h \
 SOURCES += sources/cpucoreobject.cpp \
            sources/main.cpp \
            sources/cpuobject.cpp \
-           sources/diskobject.cpp \
-           sources/memoryobject.cpp \
 
 unix:SOURCES += sources/cpuinfo_linux.cpp \
                 sources/osinfo_linux.cpp \
