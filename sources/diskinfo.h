@@ -30,6 +30,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <regex>
 #include <cstdint>
 #include <string>
+#include <cstdio>
+#include "util.h"
 
 #ifdef __linux__
     #define SYSFS_DIRECTORY "/sys/block/"
@@ -39,24 +41,23 @@ class DiskInformation
 {
 private:
 #ifdef __linux__
-    DIR* m_dirDisks;
+
+    std::unique_ptr<DIR, DirDeleter> m_dirDisks;
 
     // holds information for a single partition
     struct PartitionInfo {
         std::string name; // name of a partition
-        std::ifstream* statFile; // a reference to its stat file
+        FILE* statFile; // to its stat file
     };
 
-    std::map<std::string, std::list<PartitionInfo>> m_disksAndPartions;
+    std::map<std::string, std::vector<PartitionInfo>> m_disksAndPartions;
 
-    std::string getFullPath(const char* diskName);
+    std::string getFullPath(const std::string& diskName);
 
 #endif
 
 public:
     DiskInformation();
-    ~DiskInformation();
-
     std::list<std::string>& getPartitions(const char* diskName);
     uint64_t getTotalDiskSize(const char* diskName);
     uint64_t getFreeDiskSize(const char* diskName);

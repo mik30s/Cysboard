@@ -22,9 +22,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.
  * @brief DiskInformation::DiskInformation
  */
 DiskInformation::DiskInformation()
+    :m_dirDisks(opendir(SYSFS_DIRECTORY))
 {
-    m_dirDisks = opendir(SYSFS_DIRECTORY);
-
     if(m_dirDisks == nullptr) {
         throw std::runtime_error(std::string(__FUNCTION__) + " failed to open /sys/block");
     }
@@ -32,7 +31,7 @@ DiskInformation::DiskInformation()
     std::regex regexp("sd([A-Za-z]|[A-Za-z][0-9])+");
 
     // get first directory
-    auto nextDir = readdir(m_dirDisks);
+    auto nextDir = readdir(m_dirDisks.get());
 
     while(nextDir != nullptr) {
         if(std::regex_match(nextDir->d_name, regexp)) {
@@ -41,30 +40,27 @@ DiskInformation::DiskInformation()
 
             auto subDir = opendir(path.c_str());
 
-            std::list<PartitionInfo> subdirs;
+            std::vector<PartitionInfo> subdirs;
 
             auto nextSubDir = readdir(subDir);
 
             while(nextSubDir != nullptr) {
                 if(std::regex_match(nextSubDir->d_name, regexp)) {
                     // open stat file
-                    std::ifstream* statFile = new std::ifstream();
-                    statFile->open(getFullPath(nextSubDir->d_name) + "stat");
-                    PartitionInfo pInfo = {nextSubDir->d_name, statFile};
                     // add to list
-                    subdirs.push_back(pInfo);
+                    PartitionInfo partition = {
+                      nextSubDir->d_name,
+                      fopen(getFullPath(nextSubDir->d_name + std::string("stat")).c_str(),
+                                        std::string("r").c_str())
+                    };
+                    subdirs.push_back(std::move(partition));
                 }
                 nextSubDir = readdir(subDir);
             }
-            m_disksAndPartions.insert({ nextDir->d_name, subdirs });
+            m_disksAndPartions.insert({ nextDir->d_name, std::move(subdirs) });
         }
-        nextDir = readdir(m_dirDisks);
+        nextDir = readdir(m_dirDisks.get());
     }
-}
-
-
-DiskInformation::~DiskInformation(){
-    closedir(m_dirDisks);
 }
 
 
@@ -105,7 +101,7 @@ uint64_t DiskInformation::getFreeDiskSize(const char* diskName)
  * @param diskName
  * @return
  */
-std::string DiskInformation::getFullPath(const char* diskName)
+std::string DiskInformation::getFullPath(const std::string& diskName)
 {
     std::stringstream ss;
     std::string diskPath(SYSFS_DIRECTORY);

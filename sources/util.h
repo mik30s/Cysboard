@@ -22,6 +22,7 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <sciter/sciter-x-window.hpp>
 #include <experimental/string_view>
 #include <regex>
+#include <cmath>
 
 using string_view = std::experimental::string_view;
 
@@ -51,9 +52,15 @@ inline double round(double value){
  * @brief pipeDeleter struct
  * Closes a file stream
  */
-struct pipeDeleter {
+struct PipeDeleter {
     void operator()(FILE* ptr) const noexcept{
         pclose(ptr);
+    }
+};
+
+struct DirDeleter {
+    void operator()(__dirstream* ptr) const noexcept{
+        closedir(ptr);
     }
 };
 

@@ -17,6 +17,8 @@ along with Cysboard.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #pragma once
 
+#include "util.h"
+
 #define OUT_BUF_SIZE 512
 
 class CallProgram {
@@ -28,18 +30,13 @@ public:
         std::string output("");
         output.reserve(OUT_BUF_SIZE);
 
-        struct pipeDeleter {
-            void operator()(FILE* ptr) const noexcept{
-                pclose(ptr);
-            }
-        };
-
-        std::unique_ptr<FILE, pipeDeleter> pipe(popen(command, "r"));
+        std::unique_ptr<FILE, PipeDeleter> pipe(popen(command, "r"));
 
         if(pipe) {
             while (!feof(pipe.get())) {
-                if(fgets(const_cast<char*>(output.data()), output.capacity(), pipe.get()) != nullptr)
+                if(fgets(const_cast<char*>(output.data()), output.capacity(), pipe.get()) != nullptr) {
                     output += output.data();
+                }
             }
         }
 

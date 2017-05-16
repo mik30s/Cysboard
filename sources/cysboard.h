@@ -101,7 +101,7 @@ CysBoard::CysBoard() :
     // initialize all objects
     try {
         m_cpuInfo  = std::make_unique<CpuObject>();
-//        m_diskInfo = std::make_unique<DiskObject>();
+        m_diskInfo = std::make_unique<DiskObject>();
         m_osInfo   = std::make_unique<OsObject>();
         m_ramInfo  = std::make_unique<MemoryObject>();
     }
@@ -124,7 +124,7 @@ bool CysBoard::configure() {
 
     m_cpuInfo->initialize();
     m_ramInfo->initialize();
-//    m_diskInfo->initialize();
+    m_diskInfo->initialize();
     m_osInfo->initialize();
 
     // First initialize references to the DOM
