@@ -1,4 +1,4 @@
-/*Copyright 2016 Michael Osei
+/*Copyright 2017 Michael Osei
 
 This file is part of Cysboard.
 
